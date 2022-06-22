@@ -1,0 +1,17 @@
+.input__my_input {
+    height: 30px;
+    display: flex;
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    font-size: 16px;
+    padding: 14px 0 0 0;
+    background: #FFFFFF;
+    box-shadow: 0px 1px 0px #343A40;
+}
+
+.input__my_input::placeholder {
+    color: rgba(186, 186, 186, 1);
+}

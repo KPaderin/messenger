@@ -1,0 +1,13 @@
+.customSelector {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    font-size: 16px;
+    background: #FFFFFF;
+    border-bottom: solid 1px #343A40;
+}
