@@ -22,7 +22,7 @@ export function App() {
             setIsAuth
           }}>
             {!isAuth ? <EntryForm/> : null}
-            <Main />
+              {isAuth ? <Main /> : null}
           </AuthContext.Provider>
       </div>
     );

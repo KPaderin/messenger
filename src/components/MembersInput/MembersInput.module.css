@@ -7,11 +7,76 @@
     outline: none;
 
     font-size: 16px;
-    padding: 0 4px;
+    padding: 0 20px 0 4px;
     background: #FFFFFF;
     border-bottom: solid 1px #343A40;
 }
 
 .input__my_input::placeholder {
     color: rgba(186, 186, 186, 1);
+}
+
+.input_wrapper {
+    position: relative;
+}
+
+.btn_add_member {
+    position: absolute;
+    top: 5px;
+    right: 0;
+
+    border: none;
+    outline: none;
+
+    font-size: 16px;
+    background: #FFFFFF;
+    cursor: pointer;
+}
+
+.tooltip {
+    width: 100%;
+    margin: 0;
+    padding: 0 4px;
+    position: absolute;
+    max-height: 70px;
+
+    background-color: #fff;
+    border: solid 1px #343A40;
+    border-top: none;
+    overflow: scroll;
+}
+
+.tooltip ul li::marker {
+    display: none;
+}
+
+.members_wrapper {
+    padding: 0 4px;
+}
+
+.members_wrapper ul {
+    margin: 0;
+    padding: 0 25px;
+    display: flex;
+    flex-direction: column;
+
+    max-height: 200px;
+    overflow: auto;
+
+}
+
+.members_wrapper ul li {
+    margin-bottom: 15px;
+    padding: 4px;
+    border-bottom: solid 1px #343A40;
+    display: flex;
+    justify-content: center;
+}
+
+.members_title {
+    margin: 30px 0 10px;
+}
+
+.members_active_item {
+    background-color: red;
 }

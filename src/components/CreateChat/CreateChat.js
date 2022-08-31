@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react"
+import React, {useEffect, useState} from "react"
 import styles from './CreateChat.module.css';
 import newChatIcon from '../ChatMenu/newChatIcon.svg';
 import { ModalWindow } from '../common/ModalWindow/ModalWindow'
 import InputArea from '../NewInputArea/InputArea'
 import SelectArea from '../SelectArea/SelectArea'
-import { getAllUsers } from '../../api/users'
+import { createChat } from '../../api/chats'
 import MembersInput from '../MembersInput/MembersInput'
 
 const OPTIONS = {
@@ -15,15 +15,22 @@ const OPTIONS = {
 
 
 export const CreateChat = ( {creatingChat, setCreatingChat} ) => {
-    // eslint-disable-next-line
-    const [members, setMembers] = useState([1, 2])
-    // eslint-disable-next-line
-    const [users, setUsers] = useState([])
-
+    const [members, setMembers] = useState([])
+    const [nameChat, setNameChat] = useState("")
+    const [typeChat, setTypeChat] = useState("CHANNEL")
 
     useEffect(() => {
-        getAllUsers().then((data) => setUsers(data.users.map(item => item.login)))
-    })
+        if(localStorage.getItem('login'))
+            setMembers([localStorage.getItem('login').replaceAll("\"", "")]);
+        else
+            setMembers([]);
+    }, []);
+
+    const createChatHandler = (e) => {
+        e.preventDefault()
+
+        createChat(nameChat, typeChat, members)
+    }
 
     return (
         <ModalWindow isOpen={creatingChat} onRequestClose={() => setCreatingChat(false)}>
@@ -37,15 +44,19 @@ export const CreateChat = ( {creatingChat, setCreatingChat} ) => {
                 <InputArea
                     placeholderText={"Название"}
                     typeInput={"text"}
+                    onChange={ e => setNameChat(e.target.value) }
                 />
                 <SelectArea
                     required={true}
                     options={OPTIONS}
+                    onChange={ e => setTypeChat(e.target.value) }
                 />
                 <MembersInput
                     members={members}
+                    setMembers={setMembers}
                 />
 
+                <button className={styles.my__button} onClick={ e => createChatHandler(e)}>Создать</button>
             </form>
         </ModalWindow>
     )

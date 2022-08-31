@@ -11,6 +11,7 @@ export function HeaderTitle() {
     {
         setIsAuth(false);
         localStorage.removeItem('auth');
+        localStorage.removeItem('login');
     }
     return (
         <header className="main-window__header header">

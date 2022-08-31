@@ -44,7 +44,10 @@ const ChatWrap = () => {
             .then(response => response.json())
             .then(json => {
                 setData(json);
-                SetChatId("spam")
+                if(localStorage.getItem('chatId'))
+                    SetChatId(localStorage.getItem('chatId'))
+                else
+                    SetChatId("spam")
             })
 
         return () => controller.abort();

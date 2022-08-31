@@ -10,6 +10,7 @@ const ChatMenu = ({items, MenuActive, SetMenuActive, SetChatId}) => {
 
     const setChat = function(e) {
         SetChatId(e.target.getAttribute('data-key'))
+        localStorage.setItem('chatId', e.target.getAttribute('data-key'))
     }
 
     return (

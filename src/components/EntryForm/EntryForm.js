@@ -3,9 +3,9 @@ import logo from '../../svg-2.svg';
 import styles from './EntryForm.module.css';
 import InputArea from '../InputArea/InputArea';
 import {AuthContext} from '../../context/index';
+import {authorization, register} from '../../api/authAndReg'
 
 const EntryForm = () => {
-    const URL = 'https://kilogram-api.yandex-urfu-2021.ru/query'
     const [inputAreas, setInputArea] = useState([
         {id: 1, placeHolderText: "Логин"},
         {id: 2, placeHolderText: "Пароль"}
@@ -29,56 +29,6 @@ const EntryForm = () => {
         }
     };
 
-    function authorization(login, password) {
-            fetch(URL, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    query: `
-                    query{
-                      signIn(
-                        login: ` + login +
-                        `password: ` + password + `
-                      )
-                    }`
-                })
-            }).then(res => res.json())
-                .then(json => {
-                    if(json.hasOwnProperty("errors"))
-                        alert("Произошла ошибка :(")
-                    else {
-                        setIsAuth(true);
-                        localStorage.setItem('auth', json.data.signIn);
-                    }
-                })
-    }
-
-    function register(login, password, name) {
-        fetch(URL, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                query: `
-                    mutation{
-                      register(
-                        login:` + login +
-                        `password:` + password +
-                        `name:` + name + `
-                      ) {
-                        image
-                      }
-                    }`
-            })
-        }).then(res => res.json())
-            .then(json => {
-                if(json.hasOwnProperty("errors"))
-                    alert("Произошла ошибка :(")
-                else {
-                    alert("Добро пожаловать)")
-                }
-            })
-    }
-
     const inputRef = [useRef(), useRef(), useRef()];
     const {isAuth, setIsAuth} = useContext(AuthContext);
 
@@ -91,7 +41,7 @@ const EntryForm = () => {
         }
         if(e.target.textContent === "Войти")
             authorization(`"` + inputRef[0].current.value + `"`,
-                `"` + inputRef[1].current.value + `"`)
+                `"` + inputRef[1].current.value + `"`, setIsAuth)
         else
         {
             if(inputRef[2].current.value === "")
@@ -100,15 +50,10 @@ const EntryForm = () => {
                 return
             }
             register(`"` + inputRef[0].current.value + `"`,
-                `"` + inputRef[1].current.value + `"`, `"` + inputRef[2].current.value + `"`)
+                `"` + inputRef[1].current.value + `"`, `"` + inputRef[2].current.value + `"`,
+                setIsAuth)
         }
     };
-
-    useEffect(() => {
-        if(isAuth === true){
-            console.log(123);
-        };
-    }, [isAuth]);
 
     return (
         <div className={styles.hystmodal}>
