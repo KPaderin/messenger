@@ -1,4 +1,4 @@
-const URL = 'https://kilogram-api.yandex-urfu-2021.ru/query'
+import { URL } from '../api/url';
 
 export const getAllUsers = () => {
     return fetch(URL, {

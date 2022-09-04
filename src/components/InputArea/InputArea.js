@@ -7,7 +7,6 @@ const InputArea = React.forwardRef((props, ref) => {
                type={props.placeholderText === "Пароль" ? "password" : "text"}
                placeholder={props.placeholderText}
                className={styles.input__my_input}>
-
         </input>
     );
 });

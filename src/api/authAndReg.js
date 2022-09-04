@@ -51,3 +51,10 @@ export const register = function(login, password, name, setIsAuth) {
             }
         })
 }
+
+export const deauthorization = function(e, setIsAuth)
+{
+    setIsAuth(false);
+    localStorage.removeItem('auth');
+    localStorage.removeItem('login');
+}

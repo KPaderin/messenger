@@ -3,6 +3,7 @@ import styles from './ChatWrap.module.css';
 import ChatWrapHeader from '../ChatWrapHeader/ChatWrapHeader';
 import ChatMessages from '../ChatMessages/ChatMessages';
 import ChatMenu from '../ChatMenu/ChatMenu';
+import {getMessages} from "../../api/getMessagesAndChat";
 
 const ChatWrap = () => {
     const [data, setData] = useState(
@@ -13,48 +14,12 @@ const ChatWrap = () => {
     const [ChatId, SetChatId] = useState("")
 
     const [MenuActive, SetMenuActive] = useState(false);
-    const URL = 'https://kilogram-api.yandex-urfu-2021.ru/query'
 
     useEffect(() => {
-        const controller = new AbortController();
-        fetch(URL, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('auth')},
-            body: JSON.stringify({
-                query: `query {
-                            chats {
-                              id
-                              image
-                              name
-                              messages {
-                                id
-                                createdBy { 
-                                  image
-                                  login 
-                                  name
-                                }
-                                 createdAt
-                                text
-                              }
-                            }
-                        }`
-            })
-        })
-            .then(response => response.json())
-            .then(json => {
-                setData(json);
-                if(localStorage.getItem('chatId'))
-                    SetChatId(localStorage.getItem('chatId'))
-                else
-                    SetChatId("spam")
-            })
-
-        return () => controller.abort();
+        getMessages(setData, SetChatId)
     }, []);
 
     useEffect(() => {
-        // eslint-disable-next-line
         data.data.chats.map( item => {
             if(item.id === ChatId)
             {
@@ -62,7 +27,7 @@ const ChatWrap = () => {
                 SetMessages(item.messages);
             }
         })
-        // eslint-disable-next-line
+        console.log(data)
     }, [ChatId]);
 
     return (

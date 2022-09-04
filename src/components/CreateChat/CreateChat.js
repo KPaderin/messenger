@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react"
 import styles from './CreateChat.module.css';
-import newChatIcon from '../ChatMenu/newChatIcon.svg';
+import plusIcon from '../ChatMenu/newChatIcon.svg';
 import { ModalWindow } from '../common/ModalWindow/ModalWindow'
-import InputArea from '../NewInputArea/InputArea'
 import SelectArea from '../SelectArea/SelectArea'
 import { createChat } from '../../api/chats'
 import MembersInput from '../MembersInput/MembersInput'
@@ -13,22 +12,13 @@ const OPTIONS = {
     "PRIVATE": "Приватный чат",
 }
 
-
 export const CreateChat = ( {creatingChat, setCreatingChat} ) => {
     const [members, setMembers] = useState([])
     const [nameChat, setNameChat] = useState("")
     const [typeChat, setTypeChat] = useState("CHANNEL")
 
-    useEffect(() => {
-        if(localStorage.getItem('login'))
-            setMembers([localStorage.getItem('login').replaceAll("\"", "")]);
-        else
-            setMembers([]);
-    }, []);
-
     const createChatHandler = (e) => {
         e.preventDefault()
-
         createChat(nameChat, typeChat, members)
     }
 
@@ -37,14 +27,16 @@ export const CreateChat = ( {creatingChat, setCreatingChat} ) => {
             <div
                 onClick={() => setCreatingChat(false)}
                 className={styles.btnCloseModal}>
-                <img alt={"Close"} src={newChatIcon} />
+                <img alt={"Close"} src={plusIcon} />
             </div>
             <b className={styles.titleModal}>Создание чата</b>
             <form className={styles.createChatForm}>
-                <InputArea
-                    placeholderText={"Название"}
-                    typeInput={"text"}
-                    onChange={ e => setNameChat(e.target.value) }
+                <input
+                required
+                placeholder={"Название"}
+                typeInput={"text"}
+                className={styles.input__my_input}
+                onChange={e => setNameChat(e.target.value)}
                 />
                 <SelectArea
                     required={true}
@@ -56,7 +48,9 @@ export const CreateChat = ( {creatingChat, setCreatingChat} ) => {
                     setMembers={setMembers}
                 />
 
-                <button className={styles.my__button} onClick={ e => createChatHandler(e)}>Создать</button>
+                <button className={styles.my__button} onClick={ e => {
+                    createChatHandler(e)
+                    setCreatingChat(false) }}>Создать</button>
             </form>
         </ModalWindow>
     )

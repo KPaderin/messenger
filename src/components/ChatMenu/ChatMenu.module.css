@@ -20,6 +20,7 @@
     width: 100vw;
     height: 100vh;
     backdrop-filter: blur(2px);
+    background-color : rgba(160, 147, 147, 0);
     position: absolute;
     left: 300px;
 }

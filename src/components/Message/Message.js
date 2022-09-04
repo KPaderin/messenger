@@ -9,8 +9,8 @@ const Message = ({chatItem}) => {
 
     function getDateString(rawDate) {
         const today = new Date()
-        if (!rawDate) return `Сегодня ${today.getHours().extendToTwoDigits()}:${today.getMinutes().extendToTwoDigits()}`
-
+        if (!rawDate)
+            return `Сегодня ${today.getHours().extendToTwoDigits()}:${today.getMinutes().extendToTwoDigits()}`
         const createdAt = new Date(rawDate)
         if (today.getFullYear() === createdAt.getFullYear()
             && today.getMonth() === createdAt.getMonth()
@@ -24,9 +24,7 @@ const Message = ({chatItem}) => {
         <div className={styles.wrap}>
             <div className={styles.side__wrap}>
                 <div className={styles.user__icon__wrap}>
-                    <img
-                        className={styles.user__icon}
-                        alt={"userIcon"}
+                    <img className={styles.user__icon} alt={"userIcon"}
                         src={chatItem.createdBy.image === null ? logo : chatItem.createdBy.image}
                     />
                 </div>
@@ -39,7 +37,6 @@ const Message = ({chatItem}) => {
                 </div>
             </div>
             <div className={styles.side__wrap}>
-
             </div>
         </div>
     );

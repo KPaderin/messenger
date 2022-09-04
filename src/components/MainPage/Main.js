@@ -1,5 +1,4 @@
 import React from 'react'
-
 import HeaderTitle from '../Header/HeaderTitle'
 import ChatWrap from '../ChatWrap/ChatWrap'
 

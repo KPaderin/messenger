@@ -1,0 +1,33 @@
+.header {
+    position: relative;
+    width: 100vw;
+    height: 50px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 5px;
+    font-size: 24px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    background-color: #A09393;
+}
+
+.header__logo {
+    height: 70%;
+}
+
+.button__out {
+    position: absolute;
+    top: 53%;
+    transform: translate(-50%, -50%);
+    right: 30px;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: inherit;
+    background-color: Transparent;
+    font-size: 16px;
+    font-weight: bold;
+}

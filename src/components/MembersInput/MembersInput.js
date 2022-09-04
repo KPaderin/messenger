@@ -4,24 +4,25 @@ import { getAllUsers } from '../../api/users'
 
 const MembersInput = ({ members, setMembers }) => {
     const [users, setUsers] = useState([])
-    // eslint-disable-next-line
-    const [findedUsers, setFindedUsers] = useState([])
+    const [foundUsers, setFoundUsers] = useState([])
 
     const liveSearch = (value) => {
-        setFindedUsers(users.filter( user => user.indexOf(value) !== -1))
+        setFoundUsers(users.filter( user => user.login.indexOf(value) !== -1))
     }
 
-    // const addMember = (e) => {
-    //
-    // }
+    const selectUser = function(e, user) {
+        if(user.selected === true)
+            setMembers(members.filter(item => item !== user.login))
+        else
+            setMembers(members.concat(user.login))
+        user.selected = !user.selected
+        e.target.className = e.target.className ? "" : styles.members_active_item;
+    }
 
     if (users.length === 0) {
-        getAllUsers().then((data) => setUsers(data.users.map(item => item.login)))
-    }
-
-    const selectUser = function(e) {
-        console.log(e.target.getAttribute('data-key'))
-        e.target.className = e.target.className ? "" : styles.members_active_item;
+        getAllUsers().then((data) => setUsers( data.users.map((item) => {
+            return {login: item.login, selected: false}
+        })))
     }
 
     return (
@@ -35,18 +36,18 @@ const MembersInput = ({ members, setMembers }) => {
                         liveSearch(e.target.value)
                     }}
                 />
-                {/*<button className={styles.btn_add_member} onClick={e =>  addMember(e)}>Добавить</button>*/}
             </div>
 
             <div className={styles.members_wrapper}>
                 <p className={styles.members_title}>Участники:</p>
                 <ul className={styles.members_list}>
-                    {findedUsers.map( name => (
+                    {foundUsers.map( user => (
                         <li
-                            onClick={selectUser}
-                            key={name}
-                            data-key={name}>
-                            {name}
+                            className={!user.selected ? "" : styles.members_active_item}
+                            onClick={(e) => selectUser(e, user)}
+                            key={user.login}
+                            data-key={user.login}>
+                            {user.login}
                         </li>
                     ))}
                 </ul>
