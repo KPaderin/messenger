@@ -10,7 +10,7 @@ export function HeaderTitle() {
         <header className={styles.header}>
             <img alt="logo" src={logo} className={styles.header__logo}/>
             {'Killogram'}
-            <button onClick={(e) => deauthorization(e, setIsAuth)} className={styles.button__out}>Выйти</button>
+            <button onClick={(e) => deauthorization(e, isAuth, setIsAuth)} className={styles.button__out}>Выйти</button>
         </header>
     );
 }

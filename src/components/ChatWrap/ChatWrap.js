@@ -16,16 +16,15 @@ const ChatWrap = () => {
 
     useEffect(() => {
         getMessages(setDataChats, SetChatId)
-    }, []);
+    }, [])
 
     useEffect(() => {
         dataChats.chats.map( chat => {
             if(chat.id === ChatId)
-            {
-                SetSelectedChat(chat);
-            }
+                SetSelectedChat(chat)
+            return chat;
         })
-    }, [ChatId]);
+    }, [ChatId, dataChats])
 
     return (
         <div className={styles.chat__wrap}>

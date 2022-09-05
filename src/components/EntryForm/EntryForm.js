@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useContext, useState} from 'react';
+import React, {useRef, useContext, useState} from 'react';
 import logo from '../../svg-2.svg';
 import styles from './EntryForm.module.css';
 import InputArea from '../InputArea/InputArea';
@@ -41,7 +41,7 @@ const EntryForm = () => {
         }
         if(e.target.textContent === "Войти")
             authorization(`"` + inputRef[0].current.value + `"`,
-                `"` + inputRef[1].current.value + `"`, setIsAuth)
+                `"` + inputRef[1].current.value + `"`, isAuth, setIsAuth)
         else
         {
             if(inputRef[2].current.value === "")
@@ -50,7 +50,7 @@ const EntryForm = () => {
                 return
             }
             register(`"` + inputRef[0].current.value + `"`,
-                `"` + inputRef[1].current.value + `"`, `"` + inputRef[2].current.value + `"`,
+                `"` + inputRef[1].current.value + `"`, `"` + inputRef[2].current.value + `"`, isAuth,
                 setIsAuth)
         }
     };

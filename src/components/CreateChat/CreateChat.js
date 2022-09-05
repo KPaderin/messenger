@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, { useState } from "react"
 import styles from './CreateChat.module.css';
 import plusIcon from '../ChatMenu/newChatIcon.svg';
 import { ModalWindow } from '../common/ModalWindow/ModalWindow'

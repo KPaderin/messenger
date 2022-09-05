@@ -1,5 +1,7 @@
 const URL = 'https://kilogram-api.yandex-urfu-2021.ru/query'
-export const authorization = function (login, password, setIsAuth) {
+export const authorization = function (login, password, isAuth, setIsAuth) {
+    if(isAuth)
+        return;
     fetch(URL, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -24,7 +26,9 @@ export const authorization = function (login, password, setIsAuth) {
         })
 }
 
-export const register = function(login, password, name, setIsAuth) {
+export const register = function(login, password, name, isAuth, setIsAuth) {
+    if(isAuth)
+        return;
     fetch(URL, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -52,9 +56,10 @@ export const register = function(login, password, name, setIsAuth) {
         })
 }
 
-export const deauthorization = function(e, setIsAuth)
+export const deauthorization = function(e, isAuth, setIsAuth)
 {
-    setIsAuth(false);
+    if(isAuth === true)
+        setIsAuth(false);
     localStorage.removeItem('auth');
     localStorage.removeItem('login');
 }
