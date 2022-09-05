@@ -1,6 +1,6 @@
 const URL = 'https://kilogram-api.yandex-urfu-2021.ru/query'
 
-export const sendMessage = function(e, chatId, textareaRef, setMessages, messages) {
+export const sendMessage = function(e, chatId, textareaRef, selectedChat, SetSelectedChat) {
     if(textareaRef.current.value === "")
     {
         alert("Введите сообщение");
@@ -32,7 +32,7 @@ export const sendMessage = function(e, chatId, textareaRef, setMessages, message
             if(json.hasOwnProperty("errors"))
                 alert("Произошла ошибка :(")
             else {
-                setMessages([json.data.sendMessage].concat(messages))
+                SetSelectedChat((prev) => ({...prev, messages: [json.data.sendMessage].concat(selectedChat.messages)}))
                 textareaRef.current.value = ""
             }
         })

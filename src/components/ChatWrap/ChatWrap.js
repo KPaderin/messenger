@@ -6,39 +6,36 @@ import ChatMenu from '../ChatMenu/ChatMenu';
 import {getMessages} from "../../api/getMessagesAndChat";
 
 const ChatWrap = () => {
-    const [data, setData] = useState(
-        {"data": {"chats": [{"messages":[], "name":"", "image":null, "id":""}]}}
+    const [dataChats, setDataChats] = useState(
+        {"chats": [{"messages":[], "name":"", "image":null, "id":""}]}
     )
-    const [Messages, SetMessages] = useState(data.data.chats[0].messages)
-    const [Chat, SetChat] = useState(data.data.chats[0])
+    const [SelectedChat, SetSelectedChat] = useState(dataChats.chats[0])
     const [ChatId, SetChatId] = useState("")
 
     const [MenuActive, SetMenuActive] = useState(false);
 
     useEffect(() => {
-        getMessages(setData, SetChatId)
+        getMessages(setDataChats, SetChatId)
     }, []);
 
     useEffect(() => {
-        data.data.chats.map( item => {
-            if(item.id === ChatId)
+        dataChats.chats.map( chat => {
+            if(chat.id === ChatId)
             {
-                SetChat(item);
-                SetMessages(item.messages);
+                SetSelectedChat(chat);
             }
         })
-        console.log(data)
     }, [ChatId]);
 
     return (
         <div className={styles.chat__wrap}>
-            <ChatWrapHeader items={Chat}
+            <ChatWrapHeader items={SelectedChat}
                             MenuActive={MenuActive} SetMenuActive={SetMenuActive} />
             <ChatMenu MenuActive={MenuActive} SetMenuActive={SetMenuActive}
                       SetChatId={SetChatId}
-                      items={data.data.chats}/>
-            <ChatMessages messages={Messages} chatId={ChatId}
-                          setMessages={SetMessages}/>
+                      items={dataChats.chats}/>
+            <ChatMessages selectedChat={SelectedChat} SetSelectedChat={SetSelectedChat}
+                          chatId={ChatId}/>
         </div>
     );
 };

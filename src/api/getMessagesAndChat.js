@@ -28,7 +28,7 @@ export const getMessages = function(setData, setChatId)
     })
         .then(response => response.json())
         .then(json => {
-            setData(json);
+            setData(json.data);
             if(localStorage.getItem('chatId'))
                 setChatId(localStorage.getItem('chatId'))
             else
