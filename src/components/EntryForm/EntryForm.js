@@ -3,7 +3,8 @@ import logo from '../../svg-2.svg';
 import styles from './EntryForm.module.css';
 import InputArea from '../InputArea/InputArea';
 import {AuthContext} from '../../context/index';
-import {authorization, register} from '../../api/authAndReg'
+import {authorization, register} from '../../api/authAndReg';
+import SubmitButton from '../SubmitButton/SubmitButton';
 
 const EntryForm = () => {
     const [inputAreas, setInputArea] = useState([
@@ -67,7 +68,7 @@ const EntryForm = () => {
                                    placeholderText={inputArea.placeHolderText}
                                    key={inputArea.id}/>
                     )}
-                    <button onClick={submit} className={styles.my__button}>{buttons}</button>
+                    <SubmitButton onClick={submit} className={styles.my__button}>{buttons}</SubmitButton>
                     <div className={styles.extension__wrap}>
                         <a onClick={switchForm} href="/#">{formExtension}</a>
                     </div>

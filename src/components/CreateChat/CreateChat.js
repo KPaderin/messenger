@@ -5,6 +5,7 @@ import { ModalWindow } from '../common/ModalWindow/ModalWindow'
 import SelectArea from '../SelectArea/SelectArea'
 import { createChat } from '../../api/chats'
 import MembersInput from '../MembersInput/MembersInput'
+import SubmitButton from "../SubmitButton/SubmitButton";
 
 const OPTIONS = {
     "CHANNEL": "Канал",
@@ -48,9 +49,9 @@ export const CreateChat = ( {creatingChat, setCreatingChat} ) => {
                     setMembers={setMembers}
                 />
 
-                <button className={styles.my__button} onClick={ e => {
+                <SubmitButton className={styles.my__button} onClick={ e => {
                     createChatHandler(e)
-                    setCreatingChat(false) }}>Создать</button>
+                    setCreatingChat(false) }}>Создать</SubmitButton>
             </form>
         </ModalWindow>
     )
