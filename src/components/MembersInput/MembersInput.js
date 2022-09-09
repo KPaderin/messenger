@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styles from './MembersInput.module.css'
-import { getAllUsers } from '../../api/users'
+import { getAllUsers } from '../../services/users'
 
 const MembersInput = ({ members, setMembers }) => {
     const [users, setUsers] = useState([])

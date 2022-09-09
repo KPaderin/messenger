@@ -3,7 +3,7 @@ import styles from './CreateChat.module.css';
 import plusIcon from '../ChatMenu/newChatIcon.svg';
 import { ModalWindow } from '../common/ModalWindow/ModalWindow'
 import SelectArea from '../SelectArea/SelectArea'
-import { createChat } from '../../api/chats'
+import { createChat } from '../../services/chats'
 import MembersInput from '../MembersInput/MembersInput'
 import SubmitButton from "../SubmitButton/SubmitButton";
 

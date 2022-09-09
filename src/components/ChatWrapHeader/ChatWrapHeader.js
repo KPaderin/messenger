@@ -19,7 +19,7 @@ const ChatWrapHeader = ({items, MenuActive, SetMenuActive}) => {
                      className={styles.chat__logo}/>
                 {items.name}
                 <button className={styles.button__options}>
-                    <img alt="optionsButton" src={optionsButtonImage}/>
+                    <img className={styles.button__options__img} alt="optionsButton" src={optionsButtonImage}/>
                 </button>
             </div>
             <div className={styles.side__wrap}/>

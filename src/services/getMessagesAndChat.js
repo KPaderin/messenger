@@ -1,4 +1,4 @@
-import { URL } from '../api/url';
+import { URL } from './/url';
 
 export const getMessages = function(setData, setChatId)
 {
@@ -12,7 +12,7 @@ export const getMessages = function(setData, setChatId)
                               id
                               image
                               name
-                              messages {
+                              messages(first: 100) {
                                 id
                                 createdBy { 
                                   image
@@ -21,6 +21,16 @@ export const getMessages = function(setData, setChatId)
                                 }
                                  createdAt
                                 text
+                              }
+                              members(first: 100) {
+                                image
+                                login
+                                name
+                              }
+                              owner { 
+                                  image
+                                  login 
+                                  name
                               }
                             }
                         }`

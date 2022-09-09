@@ -1,4 +1,4 @@
-import { URL } from '../api/url';
+import { URL } from './/url';
 
 export const getAllUsers = () => {
     return fetch(URL, {

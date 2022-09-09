@@ -3,7 +3,7 @@ import logo from '../../svg-2.svg';
 import styles from './EntryForm.module.css';
 import InputArea from '../InputArea/InputArea';
 import {AuthContext} from '../../context/index';
-import {authorization, register} from '../../api/authAndReg';
+import {authorization, register} from '../../services/authAndReg';
 import SubmitButton from '../SubmitButton/SubmitButton';
 
 const EntryForm = () => {

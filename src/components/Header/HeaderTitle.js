@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import logo from '../../svg-2.svg';
 import styles from './HeaderTitle.module.css';
 import {AuthContext} from '../../context/index';
-import {deauthorization} from "../../api/authAndReg";
+import {deauthorization} from "../../services/authAndReg";
 
 export function HeaderTitle() {
     const {isAuth, setIsAuth} = useContext(AuthContext);

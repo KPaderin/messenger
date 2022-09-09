@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './ChatMessages.module.css';
 import { useEffect, useRef, useState } from 'react';
 import Message from '../Message/Message'
-import {sendMessage} from "../../api/sendMessages";
+import {sendMessage} from "../../services/sendMessages";
 
 const ChatMessages = ({selectedChat, SetSelectedChat, chatId}) => {
     const textareaRef = useRef(null);
@@ -18,7 +18,8 @@ const ChatMessages = ({selectedChat, SetSelectedChat, chatId}) => {
         <div className={styles.chat__messages__wrap}>
             <div className={styles.messages__wrap}>
                 {selectedChat.messages.map(item =>
-                <Message chatItem={item} key={item.id}/>
+                    <Message SetSelectedChat={SetSelectedChat} chatId={chatId}
+                             chatItem={item} key={item.id}/>
                 )}
             </div>
             <div className={styles.chat__input__area}>
