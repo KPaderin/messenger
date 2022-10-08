@@ -1,5 +1,5 @@
 import React, {useRef, useContext, useState} from 'react';
-import logo from '../../svg-2.svg';
+import logo from '../../logoKilogram.svg';
 import styles from './EntryForm.module.css';
 import InputArea from '../InputArea/InputArea';
 import {AuthContext} from '../../context/index';

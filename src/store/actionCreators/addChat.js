@@ -1,22 +1,24 @@
 import addChatAction from "../actions/addChatAction";
 
 export const addChat =(
-    createdBy,
+    ownerLogin,
     messages,
-    chatID,
+    members,
+    chatId,
     chatType,
     chatName,
-    chatLogo
+    chatImage
     ) => {
     return {
         type: addChatAction,
         payload: {
-            'createdBy': createdBy,
+            'ownerLogin': ownerLogin,
             'messages': messages,
-            'chatID': chatID,
+            'members': members,
+            'chatId': chatId,
             'chatType': chatType,
             'chatName': chatName,
-            'chatLogo': chatLogo
+            'chatImage': chatImage
         },
     }
 }

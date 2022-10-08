@@ -1,13 +1,15 @@
 const initialState = {
     chats: {
         chatsList: [],
+        selectedChatId: 'spam',
         newChat: {
-            createdBy: '',
+            ownerLogin: '',
             messages: [],
-            chatID: '',
+            members: [],
+            chatId: '',
             chatType: '',
             chatName: '',
-            chatLogo: ''
+            chatImage: ''
         },
     }
 }

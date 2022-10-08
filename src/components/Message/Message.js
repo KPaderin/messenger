@@ -1,35 +1,18 @@
 import React from 'react';
 import styles from './Message.module.css'
-import logo from '../../svg-2.svg'
+import logo from '../../logoKilogram.svg'
 import pencilImg from './pencil.svg'
 import trashImg from './trash.svg'
 import {deleteMessage} from "../../services/serviceMessage";
+import {formatDateString} from "../../services/formatDateString";
 
-const Message = ({SetSelectedChat, chatId, chatItem}) => {
-    const MONTH_LOCAL = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
-    Number.prototype.extendToTwoDigits = function() { return ("0" + this).slice(-2) }
-
-    function getDateString(rawDate) {
-        const today = new Date()
-        if (!rawDate)
-            return `Сегодня ${today.getHours().extendToTwoDigits()}:${today.getMinutes().extendToTwoDigits()}`
-        const createdAt = new Date(rawDate)
-        if (today.getFullYear() === createdAt.getFullYear()
-            && today.getMonth() === createdAt.getMonth()
-            && today.getDate() === createdAt.getDate()) {
-            return `Сегодня ${createdAt.getHours().extendToTwoDigits()}:${createdAt.getMinutes().extendToTwoDigits()}`
-        } else {
-            return `${createdAt.getDate().extendToTwoDigits()} ${MONTH_LOCAL[createdAt.getMonth()]} ${createdAt.getHours().extendToTwoDigits()}:${createdAt.getMinutes().extendToTwoDigits()}`
-        }
-    }
-
+const Message = ({selectedChatId, chatItem}) => {
     const delMessage = function() {
         if(window.confirm('Удалить?'))
-            deleteMessage(chatId, chatItem.id).then((answer) => console.log(answer))
+            deleteMessage(selectedChatId, chatItem.id).then((answer) => console.log(answer))
     }
 
     const editMessage = function() {
-        //window.confirm(123);
         console.log('edit')
     }
 
@@ -37,7 +20,8 @@ const Message = ({SetSelectedChat, chatId, chatItem}) => {
         if(chatItem.createdBy.login === localStorage.getItem('login').replaceAll("\"", "")) {
             return (<>
                 <img onClick={() => {editMessage()}} className={styles.button__edit__img} alt="editMessage" src={pencilImg}/>
-                <img onClick={() => {delMessage()}} className={styles.button__delete__img} alt="deleteMessage" src={trashImg}/></> )
+                <img onClick={() => {delMessage()}} className={styles.button__delete__img} alt="deleteMessage" src={trashImg}/>
+            </> )
         }
         else
             return null
@@ -58,7 +42,7 @@ const Message = ({SetSelectedChat, chatId, chatItem}) => {
                     <div className={styles.message__text}>{chatItem.text}</div>
                     <div className={styles.message__date}>
                         {buttonEditMessage()}
-                        {getDateString(chatItem.createdAt)}
+                        {formatDateString(chatItem.createdAt)}
                     </div>
                 </div>
             </div>
@@ -68,4 +52,4 @@ const Message = ({SetSelectedChat, chatId, chatItem}) => {
     );
 };
 
-export default Message;
+export default React.memo(Message);

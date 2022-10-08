@@ -2,15 +2,21 @@ import React, { useState } from 'react'
 import styles from './ChatMenu.module.css';
 import newChatIcon from './newChatIcon.svg';
 import settingsIcon from './settingsIcon.svg';
-import logo from '../../svg-2.svg';
-import { CreateChat } from '../CreateChat/CreateChat'
+import logo from '../../logoKilogram.svg';
+import CreateChat from '../CreateChat/CreateChat'
+import {useDispatch, useSelector} from "react-redux";
+import {selectChatId} from "../../store/actionCreators/selectChatId";
 
-const ChatMenu = ({items, MenuActive, SetMenuActive, SetChatId}) => {
+const ChatMenu = ({MenuActive, SetMenuActive}) => {
     const [creatingChat, setCreatingChat] = useState(false)
 
+    const dispatch = useDispatch();
+    const chatsList = useSelector(state => state.chats.chatsList)
+
     const setChat = function(e) {
-        SetChatId(e.target.getAttribute('data-key'))
-        localStorage.setItem('chatId', e.target.getAttribute('data-key'))
+        let chatId = e.target.getAttribute('data-key')
+        dispatch(selectChatId(chatId))
+        localStorage.setItem('chatId', chatId)
     }
 
     return (
@@ -20,14 +26,14 @@ const ChatMenu = ({items, MenuActive, SetMenuActive, SetChatId}) => {
             <div onClick={(e) => {e.stopPropagation()}}
                 className={styles.menu__content}>
                 <ul className={styles.chat__item__wrap}>
-                    {items.map(item =>
-                    <li onClick={setChat} className={styles.chat__item} data-key={item.id}
-                        key={item.id}>
-                        <img alt="chatLogo"
-                             src={item.image === null ? logo : `data:image/svg;base64,${item.image}`}
-                             className={styles.chat__logo}/>
-                        {item.name}
-                    </li>
+                    {chatsList.map(chat =>
+                        <li onClick={setChat} className={styles.chat__item} data-key={chat.chatId}
+                            key={chat.chatId}>
+                            <img alt="chatLogo"
+                                 src={chat.chatImage === null ? logo : `data:image/svg;base64,${chat.chatImage}`}
+                                 className={styles.chat__logo}/>
+                            {chat.chatName}
+                        </li>
                     )}
                 </ul>
                 <div className={styles.buttons__wrap}>

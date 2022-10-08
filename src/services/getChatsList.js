@@ -1,17 +1,18 @@
 import { URL } from './/url';
 
-export const getMessages = function(setData, setChatId)
+export const getChatsList = function()
 {
-    fetch(URL, {
+    return fetch(URL, {
         method: 'POST',
         headers: {'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('auth')},
         body: JSON.stringify({
             query: `query {
-                            chats {
+                            chats(first: 100) {
                               id
                               image
                               name
+                              type
                               messages(first: 100) {
                                 id
                                 createdBy { 
@@ -36,12 +37,6 @@ export const getMessages = function(setData, setChatId)
                         }`
         })
     })
-        .then(response => response.json())
-        .then(json => {
-            setData(json.data);
-            if(localStorage.getItem('chatId'))
-                setChatId(localStorage.getItem('chatId'))
-            else
-                setChatId("spam")
-        })
+        .then(response => {return response.json()})
+        .then(json => json.data.chats)
 }
