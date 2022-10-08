@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from './ChatWrapHeader.module.css';
+import styles from './ChatHeader.module.css';
 import menuButtonImg from './menu-burger.svg';
 import optionsButtonImage from './options.svg';
-import logo from '../../svg-2.svg';
+import logo from '../../logoKilogram.svg';
 
-const ChatWrapHeader = ({items, MenuActive, SetMenuActive}) => {
+const ChatHeader = ({items, MenuActive, SetMenuActive}) => {
     return (
         <div className={styles.chat__wrap__header}>
             <div className={styles.side__wrap}>
@@ -15,11 +15,11 @@ const ChatWrapHeader = ({items, MenuActive, SetMenuActive}) => {
             </div>
             <div className={styles.center__wrap}>
                 <img alt="chatLogo"
-                     src={items.image === null ? logo : `data:image/svg;base64,${items.image}`}
+                     src={items.chatImage === null ? logo : `data:image/svg;base64,${items.chatImage}`}
                      className={styles.chat__logo}/>
-                {items.name}
+                {items.chatName}
                 <button className={styles.button__options}>
-                    <img alt="optionsButton" src={optionsButtonImage}/>
+                    <img className={styles.button__options__img} alt="optionsButton" src={optionsButtonImage}/>
                 </button>
             </div>
             <div className={styles.side__wrap}/>
@@ -27,4 +27,4 @@ const ChatWrapHeader = ({items, MenuActive, SetMenuActive}) => {
     );
 };
 
-export default ChatWrapHeader;
+export default ChatHeader;

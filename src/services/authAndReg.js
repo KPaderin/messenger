@@ -1,3 +1,5 @@
+import {initStoreFromApi} from "./initStoreFromApi";
+
 const URL = 'https://kilogram-api.yandex-urfu-2021.ru/query'
 export const authorization = function (login, password, isAuth, setIsAuth) {
     if(isAuth)
@@ -22,6 +24,7 @@ export const authorization = function (login, password, isAuth, setIsAuth) {
                 setIsAuth(true);
                 localStorage.setItem('auth', json.data.signIn);
                 localStorage.setItem('login', login);
+                initStoreFromApi();
             }
         })
 }
@@ -62,4 +65,5 @@ export const deauthorization = function(e, isAuth, setIsAuth)
         setIsAuth(false);
     localStorage.removeItem('auth');
     localStorage.removeItem('login');
+    localStorage.removeItem('chatId')
 }

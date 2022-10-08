@@ -59,6 +59,8 @@
     font-size: 12px;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
     color: #343A40;
 }
 
@@ -67,4 +69,10 @@
     font-size: 16px;
     color: #fff;
     word-break: break-all;
+}
+
+.button__delete__img,
+.button__edit__img {
+    width: 15px;
+    height: 15px;
 }

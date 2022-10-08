@@ -78,5 +78,7 @@
 }
 
 .members_active_item {
-    background-color: red;
+    background: rgba(52, 58, 64, 1);
+    color: rgba(186, 186, 186, 1);
+    border-radius: .5rem;
 }

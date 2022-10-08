@@ -38,10 +38,11 @@
 
 .button__options {
     /* Пока эта кнопка не работает*/
-    opacity: 0;
+    opacity: 100;
 }
 
-.chat__logo {
-    width: 45px;
-    height: 45px;
+.chat__logo,
+.button__options__img {
+    width: 35px;
+    height: 35px;
 }

@@ -2,9 +2,9 @@ import React from 'react';
 import styles from './ChatMessages.module.css';
 import { useEffect, useRef, useState } from 'react';
 import Message from '../Message/Message'
-import {sendMessage} from "../../api/sendMessages";
+import {sendMessage} from "../../services/sendMessages";
 
-const ChatMessages = ({selectedChat, SetSelectedChat, chatId}) => {
+const ChatMessages = ({selectedChat, SetSelectedChat, selectedChatId}) => {
     const textareaRef = useRef(null);
     const [currentValue, setCurrentValue ] = useState("");
 
@@ -18,7 +18,8 @@ const ChatMessages = ({selectedChat, SetSelectedChat, chatId}) => {
         <div className={styles.chat__messages__wrap}>
             <div className={styles.messages__wrap}>
                 {selectedChat.messages.map(item =>
-                <Message chatItem={item} key={item.id}/>
+                    <Message selectedChatId={selectedChatId}
+                             chatItem={item} key={item.id}/>
                 )}
             </div>
             <div className={styles.chat__input__area}>
@@ -29,7 +30,7 @@ const ChatMessages = ({selectedChat, SetSelectedChat, chatId}) => {
                               onChange={e=>setCurrentValue(e.target.value)}
                               spellCheck={'false'} className={styles.text__area} />
                     <button onClick={(e) =>
-                        sendMessage(e, chatId, textareaRef, selectedChat, SetSelectedChat)}
+                        sendMessage(e, selectedChatId, textareaRef, selectedChat, SetSelectedChat)}
                         className={styles.button__send}>Отправить</button>
                 </div>
                 <div className={styles.side__wrap} />
