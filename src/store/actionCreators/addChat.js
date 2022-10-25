@@ -14,7 +14,7 @@ export const addChat =(
         payload: {
             'ownerLogin': ownerLogin,
             'messages': messages,
-            'members': members,
+            'chatMembers': members,
             'chatId': chatId,
             'chatType': chatType,
             'chatName': chatName,

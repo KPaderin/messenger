@@ -1,6 +1,6 @@
-import { URL } from './/url';
+import { URL } from '../consts/url';
 
-export const deleteMessage = ( chatId, messageId ) => {
+export const deleteMessageApi = ( chatId, messageId ) => {
     return fetch(URL, {
         method: "POST",
         headers: {'Content-Type': 'application/json',
@@ -13,5 +13,17 @@ export const deleteMessage = ( chatId, messageId ) => {
         }),
     })
         .then((response) => response.json())
-        .then((json) => json.data)
+        .then(json => {
+            let status = {}
+            if(json.hasOwnProperty("errors"))
+            {
+                status.errorsMessage = json.errors.map(error => error.message)
+                    .join("; ")
+                return status
+            }
+            if(json.hasOwnProperty("data")) {
+                status.deleteMessage = json.data.deleteMessage
+            }
+            return status
+        })
 }

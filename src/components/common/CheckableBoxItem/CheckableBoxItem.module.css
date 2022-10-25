@@ -1,0 +1,12 @@
+.row_wrap {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.input_checkbox {
+    position: absolute;
+    right: 0;
+}

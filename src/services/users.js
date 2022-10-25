@@ -1,6 +1,7 @@
-import { URL } from './/url';
+import { URL } from '../consts/url';
 
 export const getAllUsers = () => {
+    console.log("getallusers")
     return fetch(URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

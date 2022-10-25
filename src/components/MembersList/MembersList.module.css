@@ -1,0 +1,68 @@
+.wrap {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    overflow: hidden;
+}
+
+.members_list {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0 25px;
+    max-height: 200px;
+    overflow: auto;
+}
+
+.members_list li {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 4px;
+    border-bottom: solid 1px #343A40;
+}
+
+.btnCloseModal {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+
+.titleModal {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0 30px;
+    font-size: 30px;
+    color: #343A40;
+}
+
+.input__my_input {
+    display: flex;
+    height: 30px;
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding: 0 4px;
+    background: #FFFFFF;
+    border-bottom: solid 1px #343A40;
+}
+
+.input__my_input::placeholder {
+    color: rgba(186, 186, 186, 1);
+}
+
+.button_kick_user {
+    position: absolute;
+    right: 0;
+    height: 18px;
+    width: auto;
+    transform: rotate(45deg);
+    cursor: pointer;
+}

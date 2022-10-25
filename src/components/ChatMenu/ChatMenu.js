@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styles from './ChatMenu.module.css';
 import newChatIcon from './newChatIcon.svg';
 import settingsIcon from './settingsIcon.svg';
-import logo from '../../logoKilogram.svg';
+import logo from '../../svg-2.svg';
 import CreateChat from '../CreateChat/CreateChat'
 import {useDispatch, useSelector} from "react-redux";
 import {selectChatId} from "../../store/actionCreators/selectChatId";
@@ -30,7 +30,7 @@ const ChatMenu = ({MenuActive, SetMenuActive}) => {
                         <li onClick={setChat} className={styles.chat__item} data-key={chat.chatId}
                             key={chat.chatId}>
                             <img alt="chatLogo"
-                                 src={chat.chatImage === null ? logo : `data:image/svg;base64,${chat.chatImage}`}
+                                 src={(chat.chatImage === null ||  chat.chatImage === "null") ? logo : `data:image/svg+xml;base64,${chat.chatImage}`}
                                  className={styles.chat__logo}/>
                             {chat.chatName}
                         </li>

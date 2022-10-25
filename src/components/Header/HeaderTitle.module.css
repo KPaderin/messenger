@@ -12,6 +12,7 @@
     font-family: "Montserrat", sans-serif;
     font-weight: bold;
     background-color: #A09393;
+    z-index: 10;
 }
 
 .header__logo {

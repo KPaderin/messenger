@@ -1,13 +1,16 @@
-import React, { useState } from "react"
+import React, {useEffect, useState} from "react"
 import styles from './CreateChat.module.css'
 import plusIcon from '../ChatMenu/newChatIcon.svg'
 import { ModalWindow } from '../common/ModalWindow/ModalWindow'
-import SelectArea from '../SelectArea/SelectArea'
-import { createChatAndGetStatus } from '../../services/chats'
-import MembersInput from '../MembersInput/MembersInput'
+import DropdownList from '../DropdownList/DropdownList'
+import {createChatAndGetStatus} from '../../services/chats'
+import SelectableFilteredItemsList from '../SelectableFilteredItemsList/SelectableFilteredItemsList'
 import SubmitButton from "../SubmitButton/SubmitButton"
 import {addChat} from "../../store/actionCreators/addChat"
 import {useDispatch} from "react-redux"
+import {getAllUsers} from "../../services/users";
+import InputUnderlining from "../common/InputUnderlining/InputUnderlining";
+
 const OPTIONS = {
     "CHANNEL": "Канал",
     "GROUP": "Группа",
@@ -16,24 +19,31 @@ const OPTIONS = {
 
 const CreateChat = ( {creatingChat, setCreatingChat} ) => {
 
-    const [members, setMembers] = useState([])
+    const [selectedMembers, setSelectedMembers] = useState([])
+    const [users, setUsers] = useState([])
     const [chatName, setChatName] = useState("")
     const [chatType, setChatType] = useState("CHANNEL")
 
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        getAllUsers().then((data) => setUsers( data.users.map((item) => {
+            return {name: item.login, login:item.login, id:item.login, selected: false}
+        })))
+    }, [creatingChat])
+
     const createChatHandler = (e) => {
         e.preventDefault()
-        createChatAndGetStatus(chatName, chatType, members).then((res) => {
+        createChatAndGetStatus(chatName, chatType, selectedMembers.map(member => member.name)).then((res) => {
             if(res.hasOwnProperty("errorsMessage")) {
                 alert(res.errorsMessage)
                 return
             }
             dispatch(
-                addChat(res.ownerLogin,[],members,res.id,chatType,chatName)
+                addChat(res.ownerLogin,[],selectedMembers,res.id,chatType,chatName, null)
             )
         })
-        setMembers([])
+        setSelectedMembers([])
         setChatName("")
         setChatType("CHANNEL")
     }
@@ -47,22 +57,24 @@ const CreateChat = ( {creatingChat, setCreatingChat} ) => {
             </div>
             <b className={styles.titleModal}>Создание чата</b>
             <form className={styles.createChatForm}>
-                <input
-                required
-                placeholder={"Название"}
-                className={styles.input__my_input}
-                onChange={e => setChatName(e.target.value)}
+                <InputUnderlining
+                    placeholderText={"Название"}
+                    textValue={chatName}
+                    setTextValue={setChatName}
                 />
-                <SelectArea
+                <DropdownList
                     required={true}
                     options={OPTIONS}
                     onChange={ e => setChatType(e.target.value) }
                 />
-                <MembersInput
-                    members={members}
-                    setMembers={setMembers}
+                <SelectableFilteredItemsList
+                    itemsList={users}
+                    selectedItems={selectedMembers}
+                    setSelectedItems={setSelectedMembers}
+                    placeholder={"Поиск пользователя"}
+                    title={"Участники:"}
                 />
-                <SubmitButton className={styles.my__button} onClick={ e => {
+                <SubmitButton onClick={ e => {
                     createChatHandler(e)
                     setCreatingChat(false) }}>Создать</SubmitButton>
             </form>

@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './SelectArea.module.css'
+import styles from './DropdownList.module.css'
 
-const SelectArea = ({ required, options , onChange}) => {
+const DropdownList = ({ required, options , onChange}) => {
 
     return (
         <select
@@ -16,4 +16,4 @@ const SelectArea = ({ required, options , onChange}) => {
     )
 }
 
-export default SelectArea;
+export default DropdownList;
