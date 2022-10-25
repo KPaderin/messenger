@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import logo from '../../logoKilogram.svg';
+import logo from '../../svg-2.svg';
 import styles from './HeaderTitle.module.css';
 import {AuthContext} from '../../context/index';
 import {logout} from "../../services/logout";

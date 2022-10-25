@@ -2,11 +2,13 @@ import React from 'react';
 import styles from './ChatMessages.module.css';
 import { useEffect, useRef, useState } from 'react';
 import Message from '../Message/Message'
-import {sendMessage} from "../../services/sendMessages";
+import {useDispatch} from "react-redux";
+import {sendMessageAsync} from "../../store/asyncActions/sendMessageAsync";
 
 const ChatMessages = ({selectedChat, SetSelectedChat, selectedChatId}) => {
     const textareaRef = useRef(null);
     const [currentValue, setCurrentValue ] = useState("");
+    const dispatch = useDispatch();
 
     useEffect(() => {
         textareaRef.current.style.height = "0px";
@@ -29,8 +31,10 @@ const ChatMessages = ({selectedChat, SetSelectedChat, selectedChatId}) => {
                               rows={1} placeholder={"Введите сообщение..."}
                               onChange={e=>setCurrentValue(e.target.value)}
                               spellCheck={'false'} className={styles.text__area} />
-                    <button onClick={(e) =>
-                        sendMessage(e, selectedChatId, textareaRef, selectedChat, SetSelectedChat)}
+                    <button onClick={(e) =>{
+                        dispatch(sendMessageAsync(selectedChatId, textareaRef.current.value))
+                        setCurrentValue("")
+                    }}
                         className={styles.button__send}>Отправить</button>
                 </div>
                 <div className={styles.side__wrap} />

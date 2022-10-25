@@ -1,19 +1,24 @@
 import React from 'react';
 import styles from './Message.module.css'
-import logo from '../../logoKilogram.svg'
+import logo from '../../svg-2.svg'
 import pencilImg from './pencil.svg'
 import trashImg from './trash.svg'
-import {deleteMessage} from "../../services/serviceMessage";
 import {formatDateString} from "../../services/formatDateString";
+import {deleteMessageAsync} from "../../store/asyncActions/deleteMessageAsync";
+import {useDispatch} from "react-redux";
+import {editMessageAsync} from "../../store/asyncActions/editMessageAsync";
 
 const Message = ({selectedChatId, chatItem}) => {
+    const dispatch = useDispatch()
+
     const delMessage = function() {
         if(window.confirm('Удалить?'))
-            deleteMessage(selectedChatId, chatItem.id).then((answer) => console.log(answer))
+            dispatch(deleteMessageAsync(selectedChatId, chatItem.id))
     }
 
     const editMessage = function() {
-        console.log('edit')
+        let editedText = window.prompt("Отредактируйте сообщение", chatItem.text)
+        dispatch(editMessageAsync(selectedChatId, chatItem.id, editedText))
     }
 
     const buttonEditMessage = (() => {
@@ -32,7 +37,8 @@ const Message = ({selectedChatId, chatItem}) => {
             <div className={styles.side__wrap}>
                 <div className={styles.user__icon__wrap}>
                     <img className={styles.user__icon} alt={"userIcon"}
-                        src={chatItem.createdBy.image === null ? logo : chatItem.createdBy.image}
+                        src={chatItem.createdBy.image === null ? logo
+                            : `data:image/svg+xml;base64,${chatItem.createdBy.image}`}
                     />
                 </div>
             </div>

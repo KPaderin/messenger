@@ -6,10 +6,14 @@
     align-items: center;
     font-size: 18px;
     font-weight: 700;
-    background: rgba(52, 58, 64, 1);
+    background: rgba(52, 58, 64, 0);
+    border: 2px solid rgba(52, 58, 64, 1);
     color: rgba(186, 186, 186, 1);
-    border: none;
     padding: 0;
     cursor: pointer;
     outline: inherit;
+}
+
+.my__button.filledBackground {
+    background: rgba(52, 58, 64, 1);
 }

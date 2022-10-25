@@ -1,20 +1,15 @@
-const URL = 'https://kilogram-api.yandex-urfu-2021.ru/query'
+import {URL} from '../consts/url'
 
-export const sendMessage = function(e, chatId, textareaRef, selectedChat, SetSelectedChat) {
-    if(textareaRef.current.value === "")
-    {
-        alert("Введите сообщение");
-        return;
-    }
-    fetch(URL, {
+export const sendMessageApi = (chatId, text) => {
+    return fetch(URL, {
         method: 'POST',
         headers: {'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('auth')},
         body: JSON.stringify({
-            query: `mutation {
+            query: `mutation SendMessage($chatId: ID!, $text: String!){
                           sendMessage(
-                            chatId: "` + chatId + `"
-                            text: "` + textareaRef.current.value + `"
+                            chatId: $chatId
+                            text: $text
                           ) {
                             id
                             createdAt
@@ -25,15 +20,24 @@ export const sendMessage = function(e, chatId, textareaRef, selectedChat, SetSel
                               name
                             }
                           }
-                        }`
+                        }`,
+            variables: { chatId: chatId, text: text },
         })
     }).then(res => res.json())
         .then(json => {
+            let status = {}
             if(json.hasOwnProperty("errors"))
-                alert("Произошла ошибка :(")
-            else {
-                SetSelectedChat((prev) => ({...prev, messages: [json.data.sendMessage].concat(selectedChat.messages)}))
-                textareaRef.current.value = ""
+            {
+                status.errorsMessage = json.errors.map(error => error.message)
+                    .join("; ")
+                status.ok = false;
+                return status
             }
+            if(json.hasOwnProperty("data")) {
+                status.messageId = json.data.sendMessage.id
+            }
+            status.ok = true;
+            status.sentMessage = json.data.sendMessage
+            return status
         })
 }
