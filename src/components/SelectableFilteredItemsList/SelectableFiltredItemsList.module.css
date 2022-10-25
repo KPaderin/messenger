@@ -1,0 +1,53 @@
+.input__my_input {
+    display: flex;
+    height: 30px;
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    font-size: 16px;
+    background: #FFFFFF;
+    border-bottom: solid 1px #343A40;
+}
+
+.input__my_input::placeholder {
+    color: rgba(186, 186, 186, 1);
+}
+
+.input_wrapper {
+    position: relative;
+}
+
+.items_wrapper {
+    padding: 0 4px;
+}
+
+.items_wrapper ul {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0 25px;
+
+    max-height: 200px;
+    overflow: auto;
+
+}
+
+.items_wrapper ul li {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    padding: 4px;
+    border-bottom: solid 1px #343A40;
+}
+
+.items_title {
+    margin: 0px 0 10px;
+}
+
+.items_active_item {
+    background: rgba(52, 58, 64, 1);
+    color: rgba(186, 186, 186, 1);
+    border-radius: .5rem;
+}

@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from "react"
-import styles from './CreateChat.module.css';
-import newChatIcon from '../ChatMenu/newChatIcon.svg';
+import styles from './CreateChat.module.css'
+import plusIcon from '../ChatMenu/newChatIcon.svg'
 import { ModalWindow } from '../common/ModalWindow/ModalWindow'
-import InputArea from '../NewInputArea/InputArea'
-import SelectArea from '../SelectArea/SelectArea'
-import { createChat } from '../../api/chats'
-import MembersInput from '../MembersInput/MembersInput'
+import DropdownList from '../DropdownList/DropdownList'
+import {createChatAndGetStatus} from '../../services/chats'
+import SelectableFilteredItemsList from '../SelectableFilteredItemsList/SelectableFilteredItemsList'
+import SubmitButton from "../SubmitButton/SubmitButton"
+import {addChat} from "../../store/actionCreators/addChat"
+import {useDispatch} from "react-redux"
+import {getAllUsers} from "../../services/users";
+import InputUnderlining from "../common/InputUnderlining/InputUnderlining";
 
 const OPTIONS = {
     "CHANNEL": "Канал",
@@ -13,23 +17,35 @@ const OPTIONS = {
     "PRIVATE": "Приватный чат",
 }
 
+const CreateChat = ( {creatingChat, setCreatingChat} ) => {
 
-export const CreateChat = ( {creatingChat, setCreatingChat} ) => {
-    const [members, setMembers] = useState([])
-    const [nameChat, setNameChat] = useState("")
-    const [typeChat, setTypeChat] = useState("CHANNEL")
+    const [selectedMembers, setSelectedMembers] = useState([])
+    const [users, setUsers] = useState([])
+    const [chatName, setChatName] = useState("")
+    const [chatType, setChatType] = useState("CHANNEL")
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        if(localStorage.getItem('login'))
-            setMembers([localStorage.getItem('login').replaceAll("\"", "")]);
-        else
-            setMembers([]);
-    }, []);
+        getAllUsers().then((data) => setUsers( data.users.map((item) => {
+            return {name: item.login, login:item.login, id:item.login, selected: false}
+        })))
+    }, [creatingChat])
 
     const createChatHandler = (e) => {
         e.preventDefault()
-
-        createChat(nameChat, typeChat, members)
+        createChatAndGetStatus(chatName, chatType, selectedMembers.map(member => member.name)).then((res) => {
+            if(res.hasOwnProperty("errorsMessage")) {
+                alert(res.errorsMessage)
+                return
+            }
+            dispatch(
+                addChat(res.ownerLogin,[],selectedMembers,res.id,chatType,chatName, null)
+            )
+        })
+        setSelectedMembers([])
+        setChatName("")
+        setChatType("CHANNEL")
     }
 
     return (
@@ -37,27 +53,33 @@ export const CreateChat = ( {creatingChat, setCreatingChat} ) => {
             <div
                 onClick={() => setCreatingChat(false)}
                 className={styles.btnCloseModal}>
-                <img alt={"Close"} src={newChatIcon} />
+                <img alt={"Close"} src={plusIcon} />
             </div>
             <b className={styles.titleModal}>Создание чата</b>
             <form className={styles.createChatForm}>
-                <InputArea
+                <InputUnderlining
                     placeholderText={"Название"}
-                    typeInput={"text"}
-                    onChange={ e => setNameChat(e.target.value) }
+                    textValue={chatName}
+                    setTextValue={setChatName}
                 />
-                <SelectArea
+                <DropdownList
                     required={true}
                     options={OPTIONS}
-                    onChange={ e => setTypeChat(e.target.value) }
+                    onChange={ e => setChatType(e.target.value) }
                 />
-                <MembersInput
-                    members={members}
-                    setMembers={setMembers}
+                <SelectableFilteredItemsList
+                    itemsList={users}
+                    selectedItems={selectedMembers}
+                    setSelectedItems={setSelectedMembers}
+                    placeholder={"Поиск пользователя"}
+                    title={"Участники:"}
                 />
-
-                <button className={styles.my__button} onClick={ e => createChatHandler(e)}>Создать</button>
+                <SubmitButton onClick={ e => {
+                    createChatHandler(e)
+                    setCreatingChat(false) }}>Создать</SubmitButton>
             </form>
         </ModalWindow>
     )
 }
+
+export default CreateChat;

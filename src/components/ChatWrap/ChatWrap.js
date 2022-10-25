@@ -1,79 +1,64 @@
 import React, {useEffect, useState} from 'react';
 import styles from './ChatWrap.module.css';
-import ChatWrapHeader from '../ChatWrapHeader/ChatWrapHeader';
+import ChatHeader from '../ChatHeader/ChatHeader';
 import ChatMessages from '../ChatMessages/ChatMessages';
 import ChatMenu from '../ChatMenu/ChatMenu';
+import {useDispatch, useSelector} from 'react-redux';
+import ChatSettings from "../ChatSettings/ChatSettings";
+import {deleteChatById} from "../../store/asyncActions/deleteChatById";
+import MembersList from "../MembersList/MembersList";
+import ChatUpdate from "../ChatUpdate/ChatUpdate";
 
 const ChatWrap = () => {
-    const [data, setData] = useState(
-        {"data": {"chats": [{"messages":[], "name":"", "image":null, "id":""}]}}
-    )
-    const [Messages, SetMessages] = useState(data.data.chats[0].messages)
-    const [Chat, SetChat] = useState(data.data.chats[0])
-    const [ChatId, SetChatId] = useState("")
+    const [selectedChat, setSelectedChat] = useState({"messages":[]})
+    const [isActiveMembersList, setIsActiveMembersList] = useState(false)
+    const [isActiveEditChat, setIsActiveEditChat] = useState(false)
+    const selectedChatId = useSelector(state => state.chats.selectedChatId)
+    const chatsList = useSelector(state => state.chats.chatsList)
+    const dispatch = useDispatch();
 
     const [MenuActive, SetMenuActive] = useState(false);
-    const URL = 'https://kilogram-api.yandex-urfu-2021.ru/query'
+    const [chatSettingsActive, setChatSettingsActive] = useState(false);
+    const isOwner = (localStorage.getItem('login') !== null)
+        && (selectedChat.ownerLogin === localStorage.getItem('login').replaceAll("\"", ""))
 
     useEffect(() => {
-        const controller = new AbortController();
-        fetch(URL, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('auth')},
-            body: JSON.stringify({
-                query: `query {
-                            chats {
-                              id
-                              image
-                              name
-                              messages {
-                                id
-                                createdBy { 
-                                  image
-                                  login 
-                                  name
-                                }
-                                 createdAt
-                                text
-                              }
-                            }
-                        }`
-            })
+        chatsList.map( chat => {
+            if(chat.chatId === selectedChatId)
+                setSelectedChat(chat)
+            return chat;
         })
-            .then(response => response.json())
-            .then(json => {
-                setData(json);
-                if(localStorage.getItem('chatId'))
-                    SetChatId(localStorage.getItem('chatId'))
-                else
-                    SetChatId("spam")
-            })
+        setChatSettingsActive(false)
+    }, [selectedChatId, chatsList])
 
-        return () => controller.abort();
-    }, []);
-
-    useEffect(() => {
-        // eslint-disable-next-line
-        data.data.chats.map( item => {
-            if(item.id === ChatId)
-            {
-                SetChat(item);
-                SetMessages(item.messages);
-            }
-        })
-        // eslint-disable-next-line
-    }, [ChatId]);
-
+    const opt1 = {text:"Участники", onClickFunction:() => setIsActiveMembersList(true), id:1, publicOption:true}
+    const opt2 = {text:"Редактировать", onClickFunction:() => setIsActiveEditChat(true), id:2, publicOption:false}
+    const opt3 = {text:"Удалить", onClickFunction:() => {dispatch(deleteChatById(selectedChatId))}, id:3, publicOption:false}
+    const opt = [opt1, opt2, opt3]
     return (
         <div className={styles.chat__wrap}>
-            <ChatWrapHeader items={Chat}
-                            MenuActive={MenuActive} SetMenuActive={SetMenuActive} />
-            <ChatMenu MenuActive={MenuActive} SetMenuActive={SetMenuActive}
-                      SetChatId={SetChatId}
-                      items={data.data.chats}/>
-            <ChatMessages messages={Messages} chatId={ChatId}
-                          setMessages={SetMessages}/>
+            <ChatHeader items={selectedChat}
+                        chatSettingsActive={chatSettingsActive}
+                        setChatSettingsActive={setChatSettingsActive}
+                        MenuActive={MenuActive} SetMenuActive={SetMenuActive} />
+            <ChatSettings isOwner={isOwner} chatSettingsActive={chatSettingsActive}
+                          itemsList={opt}/>
+            <MembersList
+                chatId={selectedChatId}
+                isOwner={isOwner}
+                isActive={isActiveMembersList}
+                setIsActive={setIsActiveMembersList}
+            />
+            <ChatUpdate
+                chatName={selectedChat.chatName}
+                chatId={selectedChatId}
+                isActive={isActiveEditChat}
+                setIsActive={setIsActiveEditChat}
+                isDefaultImage={selectedChat.chatImage !== null && selectedChat.chatImage !== "null"}
+            />
+            <ChatMenu MenuActive={MenuActive} SetMenuActive={SetMenuActive}/>
+            <ChatMessages selectedChat={selectedChat} SetSelectedChat={setSelectedChat}
+                          selectedChatId={selectedChatId}/>
         </div>
     );
 };

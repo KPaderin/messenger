@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import React from 'react';
 import Main from '../MainPage/Main';
 import EntryForm from '../EntryForm/EntryForm';
 import {AuthContext} from '../../context/index';
 import '../../main.css';
+import {initStoreFromApi} from "../../services/initStoreFromApi";
 
 export function App() {
     const [isAuth, setIsAuth] = useState(true);
@@ -10,9 +12,11 @@ export function App() {
     useEffect(() => {
         if(localStorage.getItem('auth')){
             setIsAuth(true);
+            initStoreFromApi();
         }
-        else
+        else{
             setIsAuth(false);
+        }
     }, []);
 
     return (

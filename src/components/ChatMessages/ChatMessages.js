@@ -2,12 +2,13 @@ import React from 'react';
 import styles from './ChatMessages.module.css';
 import { useEffect, useRef, useState } from 'react';
 import Message from '../Message/Message'
-import {sendMessage} from "../../api/sendMessages";
+import {useDispatch} from "react-redux";
+import {sendMessageAsync} from "../../store/asyncActions/sendMessageAsync";
 
-const ChatMessages = ({messages, setMessages, chatId}) => {
+const ChatMessages = ({selectedChat, SetSelectedChat, selectedChatId}) => {
     const textareaRef = useRef(null);
     const [currentValue, setCurrentValue ] = useState("");
-    const URL = 'https://kilogram-api.yandex-urfu-2021.ru/query'
+    const dispatch = useDispatch();
 
     useEffect(() => {
         textareaRef.current.style.height = "0px";
@@ -18,8 +19,9 @@ const ChatMessages = ({messages, setMessages, chatId}) => {
     return (
         <div className={styles.chat__messages__wrap}>
             <div className={styles.messages__wrap}>
-                {messages.map(item =>
-                <Message chatItem={item} key={item.id}/>
+                {selectedChat.messages.map(item =>
+                    <Message selectedChatId={selectedChatId}
+                             chatItem={item} key={item.id}/>
                 )}
             </div>
             <div className={styles.chat__input__area}>
@@ -29,8 +31,10 @@ const ChatMessages = ({messages, setMessages, chatId}) => {
                               rows={1} placeholder={"Введите сообщение..."}
                               onChange={e=>setCurrentValue(e.target.value)}
                               spellCheck={'false'} className={styles.text__area} />
-                    <button onClick={(e) =>
-                        sendMessage(e, chatId, textareaRef, setMessages, messages)}
+                    <button onClick={(e) =>{
+                        dispatch(sendMessageAsync(selectedChatId, textareaRef.current.value))
+                        setCurrentValue("")
+                    }}
                         className={styles.button__send}>Отправить</button>
                 </div>
                 <div className={styles.side__wrap} />

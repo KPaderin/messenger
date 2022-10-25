@@ -20,24 +20,3 @@ code {
   display: flex;
   flex-direction: column;
 }
-
-
-.header {
-  position: relative;
-  width: 100vw;
-  height: 50px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  gap: 5px;
-  font-size: 24px;
-  font-family: "Montserrat", sans-serif;
-  font-weight: bold;
-  background-color: #A09393;
-}
-
-.header__logo {
-  height: 70%;
-}

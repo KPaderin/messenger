@@ -1,7 +1,6 @@
 import Modal from "react-modal"
 import React from "react"
 
-
 export const ModalWindow = ({
     isOpen,
     classname,
@@ -21,10 +20,10 @@ export const ModalWindow = ({
     )
 }
 
-
 const customStyles = {
     overlay: {
-        backgroundColor: "rgba(160, 147, 147, 0.5)",
+        backdropFilter: "blur(2px)",
+        backgroundColor: "rgba(160, 147, 147, 0.0)"
     },
     content: {
         top: "50%",

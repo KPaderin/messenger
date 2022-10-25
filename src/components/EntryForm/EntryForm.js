@@ -1,9 +1,10 @@
-import React, {useRef, useEffect, useContext, useState} from 'react';
+import React, {useRef, useContext, useState} from 'react';
 import logo from '../../svg-2.svg';
 import styles from './EntryForm.module.css';
 import InputArea from '../InputArea/InputArea';
 import {AuthContext} from '../../context/index';
-import {authorization, register} from '../../api/authAndReg'
+import {authorization, register} from '../../services/authAndReg';
+import SubmitButton from '../SubmitButton/SubmitButton';
 
 const EntryForm = () => {
     const [inputAreas, setInputArea] = useState([
@@ -41,7 +42,7 @@ const EntryForm = () => {
         }
         if(e.target.textContent === "Войти")
             authorization(`"` + inputRef[0].current.value + `"`,
-                `"` + inputRef[1].current.value + `"`, setIsAuth)
+                `"` + inputRef[1].current.value + `"`, isAuth, setIsAuth)
         else
         {
             if(inputRef[2].current.value === "")
@@ -50,7 +51,7 @@ const EntryForm = () => {
                 return
             }
             register(`"` + inputRef[0].current.value + `"`,
-                `"` + inputRef[1].current.value + `"`, `"` + inputRef[2].current.value + `"`,
+                `"` + inputRef[1].current.value + `"`, `"` + inputRef[2].current.value + `"`, isAuth,
                 setIsAuth)
         }
     };
@@ -67,7 +68,7 @@ const EntryForm = () => {
                                    placeholderText={inputArea.placeHolderText}
                                    key={inputArea.id}/>
                     )}
-                    <button onClick={submit} className={styles.my__button}>{buttons}</button>
+                    <SubmitButton onClick={submit} className={styles.my__button}>{buttons}</SubmitButton>
                     <div className={styles.extension__wrap}>
                         <a onClick={switchForm} href="/#">{formExtension}</a>
                     </div>
