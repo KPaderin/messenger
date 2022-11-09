@@ -1,27 +1,26 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styles from './ChatMenu.module.css';
 import newChatIcon from './newChatIcon.svg';
 import settingsIcon from './settingsIcon.svg';
 import logo from '../../svg-2.svg';
 import CreateChat from '../CreateChat/CreateChat'
-import {useDispatch, useSelector} from "react-redux";
-import {selectChatId} from "../../store/actionCreators/selectChatId";
+import {useDispatch} from "react-redux";
+import {selectChatById} from "../../store/actionCreators/selectChatById";
+import useActive from "../../hooks/useActive";
 
-const ChatMenu = ({MenuActive, SetMenuActive}) => {
-    const [creatingChat, setCreatingChat] = useState(false)
-
+const ChatMenu = ({isActive, changeActive, chatsList}) => {
+    const creatingChatActive = useActive()
     const dispatch = useDispatch();
-    const chatsList = useSelector(state => state.chats.chatsList)
 
     const setChat = function(e) {
         let chatId = e.target.getAttribute('data-key')
-        dispatch(selectChatId(chatId))
+        dispatch(selectChatById(chatId))
         localStorage.setItem('chatId', chatId)
     }
 
     return (
-        <div onClick={() => {SetMenuActive(false)}}
-            className={MenuActive ? styles.menu + ' ' + styles.active : styles.menu}>
+        <div onClick={() => {changeActive(false)}}
+            className={isActive ? styles.menu + ' ' + styles.active : styles.menu}>
             <div className={styles.blur}/>
             <div onClick={(e) => {e.stopPropagation()}}
                 className={styles.menu__content}>
@@ -47,13 +46,13 @@ const ChatMenu = ({MenuActive, SetMenuActive}) => {
                         src={newChatIcon}
                         className={styles.new__chat__logo}
                         onClick={() => {
-                            SetMenuActive(false)
-                            setCreatingChat(true)
+                            changeActive(false)
+                            creatingChatActive.changeActive(true)
                         }}
                     />
                 </div>
             </div>
-            <CreateChat creatingChat={creatingChat} setCreatingChat={setCreatingChat}/>
+            <CreateChat {...creatingChatActive}/>
         </div>
     );
 };

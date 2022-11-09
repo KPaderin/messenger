@@ -35,19 +35,6 @@
     max-height: 130px;
 }
 
-.side__wrap{
-    display: flex;
-    min-width: content-box;
-    width: calc((100% - 75%) / 2);
-}
-
-.center__wrap{
-    display: flex;
-    flex: 1;
-    flex-basis: 1500px;
-    max-width: 100%;
-}
-
 .text__area{
     display: flex;
     flex: 1;

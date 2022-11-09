@@ -1,18 +1,37 @@
-import React, {useRef, useContext, useState} from 'react';
+import React, {useRef, useContext, useState, useEffect} from 'react';
 import logo from '../../svg-2.svg';
-import styles from './EntryForm.module.css';
-import InputArea from '../InputArea/InputArea';
-import {AuthContext} from '../../context/index';
+import styles from './Login.module.css';
+import InputArea from '../../components/InputArea/InputArea';
+import {AuthContext} from '../../context';
 import {authorization, register} from '../../services/authAndReg';
-import SubmitButton from '../SubmitButton/SubmitButton';
+import SubmitButton from '../../components/SubmitButton/SubmitButton';
+import useInput from "../../hooks/useInput";
 
-const EntryForm = () => {
+const inputs = [
+    {id: 1, placeHolderText: "Логин", auth:true},
+    {id: 2, placeHolderText: "Пароль", auth:true},
+    {id: 3, placeHolderText: "Имя", auth:false}
+]
+
+const type = {
+    "auth":"Зарегистрироваться",
+    "register":"Уже есть аккаунт?"
+}
+
+const Login = () => {
+    const [typeForm, setTypeForm] = useState("auth")
+
+    const login = useInput();
+    const password = useInput();
+    const name = useInput();
+
     const [inputAreas, setInputArea] = useState([
         {id: 1, placeHolderText: "Логин"},
         {id: 2, placeHolderText: "Пароль"}
     ]);
     const [buttons, setButton] = useState("Войти");
     const [formExtension, setFormExtension] = useState("Зарегистрироваться");
+
 
     const switchForm = function(e) {
         e.preventDefault();
@@ -29,9 +48,9 @@ const EntryForm = () => {
             setInputArea(inputAreas.concat({id: 3, placeHolderText: "Имя"}));
         }
     };
+    const {isAuth, setIsAuth} = useContext(AuthContext);
 
     const inputRef = [useRef(), useRef(), useRef()];
-    const {isAuth, setIsAuth} = useContext(AuthContext);
 
     const submit = function(e) {
         e.preventDefault();
@@ -57,25 +76,23 @@ const EntryForm = () => {
     };
 
     return (
-        <div className={styles.hystmodal}>
-            <div className={styles.hystmodal__window}>
-                <form className={styles.hystmodal__wrap}>
-                    <div className={styles.logo__wrap}>
-                        <img alt="logo" src={logo} className={styles.entry__logo}/>
+        <section className={styles.wrap_allDisplay}>
+            <article className={styles.wrap__containerForm}>
+                <form className={styles.authForm}>
+                    <div className={styles.authFrom__logoWrap}>
+                        <img alt="logo" src={logo} className={styles.logo}/>
                     </div>
                     {inputAreas.map(inputArea =>
                         <InputArea ref={inputRef[inputArea.id-1]}
                                    placeholderText={inputArea.placeHolderText}
                                    key={inputArea.id}/>
                     )}
-                    <SubmitButton onClick={submit} className={styles.my__button}>{buttons}</SubmitButton>
-                    <div className={styles.extension__wrap}>
-                        <a onClick={switchForm} href="/#">{formExtension}</a>
-                    </div>
+                    <SubmitButton onClick={submit}>{buttons}</SubmitButton>
+                    <a onClick={switchForm} href="/#">{formExtension}</a>
                 </form>
-            </div>
-        </div>
+            </article>
+        </section>
     );
 };
 
-export default EntryForm;
+export default Login;

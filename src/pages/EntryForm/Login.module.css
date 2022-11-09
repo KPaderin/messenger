@@ -1,0 +1,54 @@
+:root {
+    --light-hystmodal-bg: #fff;
+    --dark-hystmodal-bg: #A09393;
+}
+
+.wrap_allDisplay,
+.wrap__containerForm,
+.authForm {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrap_allDisplay {
+    position: fixed;
+    inset: 0;
+    padding: 10vh 0 10vh 0;
+    background: var(--dark-hystmodal-bg);
+
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.wrap__containerForm{
+    width: 500px;
+    height: 500px;
+    max-width: 100%;
+    background: var(--light-hystmodal-bg);
+}
+
+.authForm {
+    width: 70%;
+    padding: 20px;
+    flex-direction: column;
+}
+
+.authForm :nth-child(n+2) {
+    margin-top: 22px;
+}
+
+.authFrom__logoWrap {
+    height: 150px;
+}
+
+.logo {
+    height: 50px;
+}
+
+a:active,
+a:hover,
+a {
+    text-decoration: none;
+    color: #666;
+}

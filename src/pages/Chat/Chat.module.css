@@ -1,6 +1,6 @@
 .chat__wrap {
     display: flex;
-    width: 100vw;
+    width: 100%;
     height: calc(100% - 30px);
     flex-direction: column;
     pading: 0;

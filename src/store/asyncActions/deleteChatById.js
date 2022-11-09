@@ -1,6 +1,6 @@
-import {deleteChat as deleteChatApi} from "../../services/deleteChat";
+import {deleteChatApi} from "../../services/deleteChat";
 import {deleteChat} from "../actionCreators/deleteChat"
-import {selectChatId} from "../actionCreators/selectChatId";
+import {selectChatById} from "../actionCreators/selectChatById";
 
 export const deleteChatById = (id) => {
     return function(dispatch){
@@ -8,7 +8,7 @@ export const deleteChatById = (id) => {
             if(res === true)
             {
                 dispatch(deleteChat(id))
-                dispatch(selectChatId('spam'))
+                dispatch(selectChatById('spam'))
                 localStorage.setItem('chatId', 'spam')
             }
         })

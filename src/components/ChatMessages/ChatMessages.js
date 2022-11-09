@@ -1,43 +1,49 @@
 import React from 'react';
 import styles from './ChatMessages.module.css';
-import { useEffect, useRef, useState } from 'react';
 import Message from '../Message/Message'
 import {useDispatch} from "react-redux";
 import {sendMessageAsync} from "../../store/asyncActions/sendMessageAsync";
+import useResizeTextArea from "../../hooks/useResizeTextarea";
+import SideWrap from "../common/wraps/rowDividedWrap/SideWrap";
+import CenterWrap from "../common/wraps/rowDividedWrap/CenterWrap";
 
-const ChatMessages = ({selectedChat, SetSelectedChat, selectedChatId}) => {
-    const textareaRef = useRef(null);
-    const [currentValue, setCurrentValue ] = useState("");
+const ChatMessages = ({selectedChat}) => {
     const dispatch = useDispatch();
+    const messageText = useResizeTextArea()
 
-    useEffect(() => {
-        textareaRef.current.style.height = "0px";
-        const scrollHeight = textareaRef.current.scrollHeight;
-        textareaRef.current.style.height = Math.min(90, scrollHeight) + "px";
-    }, [currentValue]);
+    const handleSendMessage = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        dispatch(sendMessageAsync(selectedChat.chatId, messageText.value))
+    }
 
     return (
         <div className={styles.chat__messages__wrap}>
             <div className={styles.messages__wrap}>
                 {selectedChat.messages.map(item =>
-                    <Message selectedChatId={selectedChatId}
-                             chatItem={item} key={item.id}/>
+                    <Message
+                        selectedChatId={selectedChat.chatId}
+                        chatItem={item}
+                        key={item.id}
+                    />
                 )}
             </div>
             <div className={styles.chat__input__area}>
-                <div className={styles.side__wrap} />
-                <div className={styles.center__wrap}>
-                    <textarea ref={textareaRef} value={currentValue}
-                              rows={1} placeholder={"Введите сообщение..."}
-                              onChange={e=>setCurrentValue(e.target.value)}
-                              spellCheck={'false'} className={styles.text__area} />
-                    <button onClick={(e) =>{
-                        dispatch(sendMessageAsync(selectedChatId, textareaRef.current.value))
-                        setCurrentValue("")
-                    }}
-                        className={styles.button__send}>Отправить</button>
-                </div>
-                <div className={styles.side__wrap} />
+                <SideWrap />
+                <CenterWrap>
+                    <textarea
+                        className={styles.text__area}
+                        rows={1}
+                        placeholder={"Введите сообщение..."}
+                        {...messageText}
+                        spellCheck={'false'}
+                    />
+                    <button
+                        onClick={e => handleSendMessage(e)}
+                        className={styles.button__send}
+                    >Отправить</button>
+                </CenterWrap>
+                <SideWrap />
             </div>
         </div>
     );

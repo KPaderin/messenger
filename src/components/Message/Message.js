@@ -22,7 +22,7 @@ const Message = ({selectedChatId, chatItem}) => {
     }
 
     const buttonEditMessage = (() => {
-        if(chatItem.createdBy.login === localStorage.getItem('login').replaceAll("\"", "")) {
+        if(localStorage.getItem('login') && chatItem.createdBy.login === localStorage.getItem('login').replaceAll("\"", "")) {
             return (<>
                 <img onClick={() => {editMessage()}} className={styles.button__edit__img} alt="editMessage" src={pencilImg}/>
                 <img onClick={() => {delMessage()}} className={styles.button__delete__img} alt="deleteMessage" src={trashImg}/>

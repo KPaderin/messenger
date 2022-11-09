@@ -1,12 +1,12 @@
 import React from 'react'
 import HeaderTitle from '../Header/HeaderTitle'
-import ChatWrap from '../ChatWrap/ChatWrap'
+import Chat from '../../pages/Chat/Chat'
 
 export function Main() {
     return (
         <main className="main-window">
             <HeaderTitle />
-            <ChatWrap />
+            <Chat />
         </main>
     );
 }

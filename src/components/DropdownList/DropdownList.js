@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './DropdownList.module.css'
+import React from "react";
+import styles from "./DropdownList.module.css";
 
 const DropdownList = ({ required, options , onChange}) => {
 

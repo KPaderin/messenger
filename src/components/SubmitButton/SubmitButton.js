@@ -11,6 +11,7 @@ const SubmitButton = ({
         [styles.my__button]: true,
         [styles.filledBackground]: (filledBackground === undefined) || filledBackground === true
     });
+    
     return (
         <button onClick={onClick} className={changeableClass}>
             {children}

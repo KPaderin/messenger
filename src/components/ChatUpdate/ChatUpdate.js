@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState} from "react";
 import {ModalWindow} from "../common/ModalWindow/ModalWindow";
-import styles from './ChatUpdate.module.css';
+import styles from "./ChatUpdate.module.css";
 import InputUnderlining from "../common/InputUnderlining/InputUnderlining";
 import CheckableBoxItem from "../common/CheckableBoxItem/CheckableBoxItem";
 import YesNoButtons from "../common/YesNoButtons/YesNoButtons";
@@ -8,7 +8,7 @@ import plusIcon from "../../icons/plusIcon.svg";
 import {useDispatch} from "react-redux";
 import {updateChatAsync} from "../../store/asyncActions/updateChatAsync";
 
-const ChatUpdate = ({chatName, isDefaultImage, chatId, isActive, setIsActive}) => {
+const ChatUpdate = ({chatName, isDefaultImage, chatId, isActive, changeActive}) => {
     const [useDefaultImage, setUseDefaultImage] = useState(false)
     const [currentValue, setCurrentValue] = useState("")
     const dispatch = useDispatch();
@@ -21,18 +21,22 @@ const ChatUpdate = ({chatName, isDefaultImage, chatId, isActive, setIsActive}) =
     const handleUpdateChat = function(e) {
         e.preventDefault();
         dispatch(updateChatAsync(chatId, currentValue, useDefaultImage));
-        setIsActive(false);
+        changeActive();
+    }
+
+    const handleHideUpdateChat = function() {
+        changeActive()
     }
     return (
-        <ModalWindow isOpen={isActive} onRequestClose={() => setIsActive(false)}>
+        <ModalWindow isOpen={isActive} onRequestClose={() => changeActive()}>
             <form className={styles.editChatForm}>
                 <img className={styles.btnCloseModal} alt={"CloseMembersList"} src={plusIcon}
-                     onClick={() => {setIsActive(false)}}/>
+                     onClick={() => {changeActive()}}/>
                 <b className={styles.titleModal}>Редактирование</b>
                 <InputUnderlining
-                    placeholderText={chatName}
-                    textValue={currentValue}
-                    setTextValue={setCurrentValue}
+                    placeholder={chatName}
+                    value={currentValue}
+                    onChange={e => setCurrentValue(e.target.value)}
                 />
                 <CheckableBoxItem
                     text={"Использовать дефолтную аватарку?"}
@@ -43,7 +47,7 @@ const ChatUpdate = ({chatName, isDefaultImage, chatId, isActive, setIsActive}) =
                     yesText={"Сохранить"}
                     noText={"Отменить"}
                     yesClick={(e) => handleUpdateChat(e)}
-                    noClick={() => setIsActive(false)}
+                    noClick={(e) => handleHideUpdateChat(e)}
                 />
             </form>
         </ModalWindow>

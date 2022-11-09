@@ -1,43 +1,29 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styles from "./MembersList.module.css";
 import plusIcon from "../../icons/plusIcon.svg";
 import {ModalWindow} from "../common/ModalWindow/ModalWindow";
 import SelectableFilteredItemsList from "../SelectableFilteredItemsList/SelectableFilteredItemsList";
-import {getAllUsers} from "../../services/users";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import {useDispatch, useSelector} from "react-redux";
 import {kickUserAsync} from "../../store/asyncActions/kickUserAsync";
 import {addManyMemberAsync} from "../../store/asyncActions/addManyMembersAsync";
 
-const MembersList = ({isActive, setIsActive, isOwner, chatId}) => {
+const MembersList = ({isActive, changeActive, isOwner, chatId, members}) => {
     const [selectedMembers, setSelectedMembers] = useState([])
-    const [users, setUsers] = useState([])
-    const [members, setMembers] = useState([])
 
-    const chatsList = useSelector(state => state.chats.chatsList)
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        getAllUsers().then((data) => setUsers( data.users.map((item) => {
-            return {name: item.login, id:item.login, image: item.image, login: item.login, selected: false}
-        })))
-    }, [isActive])
-
-    useEffect(() => {
-        chatsList.forEach((chat) => {
-            if(chat.chatId === chatId)
-                setMembers(chat.chatMembers)
-        })
-    }, [chatId, chatsList])
+    const users = useSelector(state => state.users.usersList).map( item => {
+        return {...item, selected: false}
+    })
 
     const handleKickMember = (login) => {
         dispatch(kickUserAsync(chatId, login));
     }
     return (
-            <ModalWindow isOpen={isActive} onRequestClose={() => setIsActive(false)}>
+            <ModalWindow isOpen={isActive} onRequestClose={() => changeActive()}>
                 <form className={styles.wrap}>
                     <img className={styles.btnCloseModal} alt={"CloseMembersList"} src={plusIcon}
-                         onClick={() => {setIsActive(false)}}/>
+                         onClick={() => {changeActive()}}/>
                     <b className={styles.titleModal}>Участники</b>
                     <ul className={styles.members_list}>
                         {members.map(item => {
@@ -49,7 +35,7 @@ const MembersList = ({isActive, setIsActive, isOwner, chatId}) => {
                           </li>
                         })}
                     </ul>
-                    {isOwner ? <><SelectableFilteredItemsList
+                    {isOwner && <><SelectableFilteredItemsList
                         itemsList={users}
                         selectedItems={selectedMembers}
                         setSelectedItems={setSelectedMembers}
@@ -61,7 +47,7 @@ const MembersList = ({isActive, setIsActive, isOwner, chatId}) => {
                         onClick={ e => {
                             dispatch(addManyMemberAsync(chatId, selectedMembers))
                         }}
-                    >Добавить</SubmitButton></>: null}
+                    >Добавить</SubmitButton></>}
                 </form>
             </ModalWindow>
     );
