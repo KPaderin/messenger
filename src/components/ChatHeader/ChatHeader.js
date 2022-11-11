@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './ChatHeader.module.css';
 import menuButtonImg from './menu-burger.svg';
 import optionsButtonImage from './options.svg';
-import logo from '../../svg-2.svg';
+import logo from '../../images/logo.svg';
 import classNames from "classnames";
 import CenterWrap from "../common/wraps/rowDividedWrap/CenterWrap";
 import SideWrap from "../common/wraps/rowDividedWrap/SideWrap";

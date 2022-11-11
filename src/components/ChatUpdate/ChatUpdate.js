@@ -4,7 +4,7 @@ import styles from "./ChatUpdate.module.css";
 import InputUnderlining from "../common/InputUnderlining/InputUnderlining";
 import CheckableBoxItem from "../common/CheckableBoxItem/CheckableBoxItem";
 import YesNoButtons from "../common/YesNoButtons/YesNoButtons";
-import plusIcon from "../../icons/plusIcon.svg";
+import plusIcon from "../../images/plusIcon.svg";
 import {useDispatch} from "react-redux";
 import {updateChatAsync} from "../../store/asyncActions/updateChatAsync";
 

@@ -1,47 +1,48 @@
 import {initStoreFromApi} from "./initStoreFromApi";
 
 const URL = 'https://kilogram-api.yandex-urfu-2021.ru/query'
-export const authorization = function (login, password, isAuth, setIsAuth) {
-    if(isAuth)
-        return;
-    fetch(URL, {
+export const authorization = function (userData, setIsAuth) {
+    return fetch(URL, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
             query: `
                     query{
                       signIn(
-                        login: ` + login +
-                `password: ` + password + `
+                        login: "` + userData.login + `"
+                password: "` + userData.password + `"
                       )
                     }`
         })
     }).then(res => res.json())
         .then(json => {
-            if(json.hasOwnProperty("errors"))
+            let status = {}
+            status.ok = true;
+            if(json.hasOwnProperty("errors")) {
+                status.ok = false;
                 alert("Произошла ошибка :(")
+            }
             else {
                 setIsAuth(true);
                 localStorage.setItem('auth', json.data.signIn);
-                localStorage.setItem('login', login);
+                localStorage.setItem('login', userData.login);
                 initStoreFromApi();
             }
+            return status
         })
 }
 
-export const register = function(login, password, name, isAuth, setIsAuth) {
-    if(isAuth)
-        return;
-    fetch(URL, {
+export const register = function(userData, isAuth, setIsAuth) {
+    return fetch(URL, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
             query: `
                     mutation{
                       register(
-                        login:` + login +
-                `password:` + password +
-                `name:` + name + `
+                        login: "` + userData.login + `"
+                password: "` + userData.password + `"
+                name: "` + userData.name + `"
                       ) {
                         image
                       }
@@ -49,13 +50,18 @@ export const register = function(login, password, name, isAuth, setIsAuth) {
         })
     }).then(res => res.json())
         .then(json => {
-            if(json.hasOwnProperty("errors"))
+            let status = {}
+            status.ok = true;
+            if(json.hasOwnProperty("errors")){
+                status.ok = false;
                 alert("Произошла ошибка :(")
+            }
             else {
                 setIsAuth(true);
-                authorization(login, password, setIsAuth);
+                authorization(userData, setIsAuth);
                 alert("Добро пожаловать)")
             }
+            return status
         })
 }
 

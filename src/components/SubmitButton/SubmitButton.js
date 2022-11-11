@@ -5,7 +5,8 @@ import classNames from "classnames";
 const SubmitButton = ({
     onClick,
     children,
-    filledBackground
+    filledBackground,
+    disabled
     }) => {
     const changeableClass = classNames({
         [styles.my__button]: true,
@@ -13,7 +14,7 @@ const SubmitButton = ({
     });
     
     return (
-        <button onClick={onClick} className={changeableClass}>
+        <button onClick={onClick} className={changeableClass} disabled={disabled}>
             {children}
         </button>
     );

@@ -42,7 +42,7 @@
     color: #343A40;
 }
 
-.input__my_input {
+.input_myInput {
     display: flex;
     height: 30px;
     width: 100%;
@@ -54,7 +54,7 @@
     border-bottom: solid 1px #343A40;
 }
 
-.input__my_input::placeholder {
+.input_myInput::placeholder {
     color: rgba(186, 186, 186, 1);
 }
 

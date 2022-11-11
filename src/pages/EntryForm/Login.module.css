@@ -22,6 +22,8 @@
 }
 
 .wrap__containerForm{
+    display: flex;
+    align-items: flex-start;
     width: 500px;
     height: 500px;
     max-width: 100%;

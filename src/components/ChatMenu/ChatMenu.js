@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './ChatMenu.module.css';
 import newChatIcon from './newChatIcon.svg';
 import settingsIcon from './settingsIcon.svg';
-import logo from '../../svg-2.svg';
+import logo from '../../images/logo.svg';
 import CreateChat from '../CreateChat/CreateChat'
 import {useDispatch} from "react-redux";
 import {selectChatById} from "../../store/actionCreators/selectChatById";

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Message.module.css'
-import logo from '../../svg-2.svg'
+import logo from '../../images/logo.svg'
 import pencilImg from './pencil.svg'
 import trashImg from './trash.svg'
 import {formatDateString} from "../../services/formatDateString";

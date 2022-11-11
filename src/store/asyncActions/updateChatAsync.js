@@ -1,6 +1,6 @@
 import {updateChatImageApi} from "../../services/chats";
 import {updateChatNameApi} from "../../services/chats";
-import {avatarLooksLikeGithub} from "../../icons/avatarLooksLikeGithub/avatarLooksLikeGithub";
+import {avatarLooksLikeGithub} from "../../images/avatarLooksLikeGithub/avatarLooksLikeGithub";
 import {updateChat} from "../actionCreators/updateChat";
 
 export const updateChatAsync = (chatId, chatName, isDefaultImage) => {

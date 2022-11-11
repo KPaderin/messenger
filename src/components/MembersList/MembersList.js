@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styles from "./MembersList.module.css";
-import plusIcon from "../../icons/plusIcon.svg";
+import plusIcon from "../../images/plusIcon.svg";
 import {ModalWindow} from "../common/ModalWindow/ModalWindow";
 import SelectableFilteredItemsList from "../SelectableFilteredItemsList/SelectableFilteredItemsList";
 import SubmitButton from "../SubmitButton/SubmitButton";
