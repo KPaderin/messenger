@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import logo from '../../images/logo.svg';
 import styles from './Login.module.css';
 import InputArea from '../../components/InputArea/InputArea';
@@ -10,46 +10,42 @@ import useToggle from "../../hooks/useToggle";
 
 const forms = [
     {
-        formType: "auth",
         toggleText: "Зарегистрироваться",
-        buttonText: "Войти"
+        buttonText: "Войти",
+        nameField: false,
+        funcOnSubmit: authorization
     },
     {
-        formType: "register",
         toggleText: "Уже есть аккаунт?",
-        buttonText: "Зарегистрироваться"
+        buttonText: "Зарегистрироваться",
+        nameField: true,
+        funcOnSubmit: register
     }
 ];
 
 const Login = () => {
-    const {isAuth, setIsAuth} = useContext(AuthContext);
+    const {setIsAuth} = useContext(AuthContext);
 
-    const currentForm = useToggle(forms)
+    const currentForm = useToggle(forms);
+    const waitingText = useToggle(["", "Подождите"]);
     const login = useInput();
     const password = useInput();
     const name = useInput();
-    const waitingText = useToggle(["", "Подождите"])
 
     const handleSwitchForm = function(e) {
         e.preventDefault();
         currentForm.onClick(e);
     };
 
-    const submit = function(e) {
+    const handleSubmit = function(e) {
         e.preventDefault();
-        waitingText.onClick(e);
-        let userData = {login:login.value, password:password.value, name:name.value}
         e.target.disabled = true;
-        if(currentForm.value.formType === "register")
-            register(userData, isAuth, setIsAuth).then(res => {
-                e.target.disabled = false;
-                waitingText.onClick(e);
-            })
-        if(currentForm.value.formType === "auth")
-            authorization(userData, setIsAuth).then(res => {
-                e.target.disabled = false;
-                waitingText.onClick(e);
-            })
+        waitingText.onClick(e);
+        let userData = {login:login.value, password:password.value, name:name.value};
+        currentForm.value.funcOnSubmit(userData, setIsAuth).then(() => {
+            e.target.disabled = false;
+            waitingText.onClick(e);
+        })
     };
 
     return (
@@ -61,8 +57,10 @@ const Login = () => {
                     </div>
                     <InputArea {...login} placeholder={"Логин"}/>
                     <InputArea {...password} placeholder={"Пароль"} type={"password"}/>
-                    <InputArea {...name} placeholder={"Имя"}/>
-                    <SubmitButton onClick={submit}>
+                    {currentForm.value.nameField &&
+                        <InputArea {...name} placeholder={"Имя"}/>
+                    }
+                    <SubmitButton onClick={handleSubmit}>
                         {waitingText.value || currentForm.value.buttonText}
                     </SubmitButton>
                     <a onClick={handleSwitchForm} href="/#">
