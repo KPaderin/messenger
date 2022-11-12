@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const useInput = (initial, placeholder, type) => {
+const useInput = (initial) => {
     const [value, setValue] = useState(initial || "");
 
     return {

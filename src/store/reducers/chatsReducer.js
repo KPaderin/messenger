@@ -22,7 +22,7 @@ export default function chatsReducer(state = initialState.chats, action) {
         case userLogoutAction: {
             return {
                 ...state,
-                chats: initialState.chats
+                ...initialState.chats
             }
         }
         case selectChatByIdAction: {

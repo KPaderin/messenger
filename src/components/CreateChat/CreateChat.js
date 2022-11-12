@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styles from "./CreateChat.module.css";
-import plusIcon from "../ChatMenu/newChatIcon.svg";
+import plusIcon from "../../images/plusIcon.svg";
 import {ModalWindow} from "../common/ModalWindow/ModalWindow";
 import DropdownList from "../DropdownList/DropdownList";
 import SelectableFilteredItemsList from "../SelectableFilteredItemsList/SelectableFilteredItemsList";
@@ -27,13 +27,15 @@ const CreateChat = ( {isActive, changeActive} ) => {
         return {...item, selected: false}
     })
 
+    useEffect(() => {
+        chatName.reset()
+        setSelectedMembers([])
+        setChatType("CHANNEL")
+    }, [isActive])
 
     const createChatHandler = (e) => {
         e.preventDefault()
         dispatch(createChatAsync(chatName.value, chatType, selectedMembers))
-        setSelectedMembers([])
-        chatName.reset()
-        setChatType("CHANNEL")
         changeActive()
     }
 
@@ -63,10 +65,10 @@ const CreateChat = ( {isActive, changeActive} ) => {
                     title={"Участники:"}
                 />
                 <SubmitButton
-                    onClick={ e => createChatHandler(e) }>Создать</SubmitButton>
+                    onClick={createChatHandler}>Создать</SubmitButton>
             </form>
         </ModalWindow>
     )
 }
 
-export default CreateChat;
+export default React.memo(CreateChat);

@@ -5,8 +5,10 @@ const InputUnderlining = (props) => {
     return (
         <input
         required
-        className={styles.input__my_input}
-        {...props}
+        className={styles.input_myInput}
+        placeholder={props.placeholder}
+        onChange={props.onChange}
+        value={props.value}
         />
     );
 };

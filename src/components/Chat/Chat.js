@@ -1,15 +1,16 @@
 import React from 'react';
 import styles from './Chat.module.css';
-import ChatHeader from '../../components/ChatHeader/ChatHeader';
-import ChatMessages from '../../components/ChatMessages/ChatMessages';
-import ChatMenu from '../../components/ChatMenu/ChatMenu';
+import ChatHeader from '../ChatHeader/ChatHeader';
+import ChatMessages from '../ChatMessages/ChatMessages';
+import ChatMenu from '../ChatMenu/ChatMenu';
 import {useDispatch, useSelector} from 'react-redux';
-import ChatSettings from "../../components/ChatSettings/ChatSettings";
+import ChatSettings from "../ChatSettings/ChatSettings";
 import {deleteChatById} from "../../store/asyncActions/deleteChatById";
-import MembersList from "../../components/MembersList/MembersList";
-import ChatUpdate from "../../components/ChatUpdate/ChatUpdate";
+import ChatMembers from "../ChatMembers/ChatMembers";
+import ChatUpdate from "../ChatUpdate/ChatUpdate";
 import useActive from "../../hooks/useActive";
 import {chatsListSelector, selectedChatSelector} from "../../store/selectors";
+import {compareWithSessionLogin} from "../../helpers/compareWithSessionLogin";
 
 const Chat = () => {
     const menuActive = useActive(false);
@@ -21,13 +22,14 @@ const Chat = () => {
     const selectedChat = useSelector(selectedChatSelector)
     const dispatch = useDispatch();
 
-    const isOwner = (localStorage.getItem('login') !== null)
-        && (selectedChat.ownerLogin === localStorage.getItem('login').replaceAll("\"", ""))
+    const isOwner = compareWithSessionLogin(selectedChat.ownerLogin)
 
-    const opt1 = {text:"Участники", onClickFunction:() => membersListActive.changeActive(), id:1, publicOption:true}
-    const opt2 = {text:"Редактировать", onClickFunction:() => editChatActive.changeActive(), id:2, publicOption:false}
-    const opt3 = {text:"Удалить", onClickFunction:() => {dispatch(deleteChatById(selectedChat.chatId))}, id:3, publicOption:false}
-    const opt = [opt1, opt2, opt3]
+    const settingsOption = [
+        {text:"Участники", onClickFunction:() => membersListActive.changeActive(), id:1, publicOption:true},
+        {text:"Редактировать", onClickFunction:() => editChatActive.changeActive(), id:2, publicOption:false},
+        {text:"Удалить", onClickFunction:() => {dispatch(deleteChatById(selectedChat.chatId))}, id:3, publicOption:false}
+    ]
+
     return (
         <div className={styles.chat__wrap}>
             <ChatHeader
@@ -37,10 +39,10 @@ const Chat = () => {
                 changeMenuActive={menuActive.changeActive}
             />
             <ChatSettings
-                itemsList={opt.filter(item => {return item.publicOption || (isOwner)})}
+                itemsList={settingsOption.filter(item => {return item.publicOption || (isOwner)})}
                 isActive={chatSettingsActive.isActive}
             />
-            <MembersList
+            <ChatMembers
                 members={selectedChat.chatMembers}
                 chatId={selectedChat.chatId}
                 isOwner={isOwner}

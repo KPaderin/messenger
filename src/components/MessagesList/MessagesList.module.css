@@ -1,0 +1,17 @@
+.messages__wrap {
+    display: flex;
+    flex-direction: column-reverse;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100%;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    object-fit: cover;
+    flex: 1;
+    gap: 20px;
+}
+
+.messages__wrap::-webkit-scrollbar {
+    display: none;
+}

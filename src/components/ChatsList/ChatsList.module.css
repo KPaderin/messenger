@@ -1,0 +1,34 @@
+.chatsListContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100% - 130px);
+    gap: 10px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    padding: 0;
+    margin: 0;
+}
+
+.chatsListContainer__chat {
+    display: flex;
+    align-items: center;
+    color: #C4C4C4;
+    font-size: 20px;
+    font-weight: bold;
+    object-fit: cover;
+    width: 100%;
+    cursor: pointer;
+}
+
+.chat__image {
+    padding-left: 40px;
+    padding-right: 10px;
+    width: 35px;
+    height: 35px;
+}
+
+.chatsListContainer::-webkit-scrollbar {
+    display: none;
+}

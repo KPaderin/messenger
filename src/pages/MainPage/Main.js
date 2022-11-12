@@ -1,15 +1,14 @@
 import React from 'react'
-import HeaderTitle from '../Header/HeaderTitle'
-import Chat from '../../pages/Chat/Chat'
+import Header from '../../components/Header/Header'
+import Chat from '../../components/Chat/Chat'
 
 export function Main() {
     return (
         <main className="main-window">
-            <HeaderTitle />
+            <Header />
             <Chat />
         </main>
     );
 }
-
 
 export default Main;
