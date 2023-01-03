@@ -11,6 +11,9 @@ const MessageInputForm = ({handleSendMessage}) => {
         e.stopPropagation();
         e.preventDefault();
         handleSendMessage(messageText.value)
+        console.log(messageText.ref.current.innerHTML);
+        messageText.ref.current.value = "";
+        messageText.onChange({target:{value:""}});
     }
 
     return (
@@ -34,4 +37,4 @@ const MessageInputForm = ({handleSendMessage}) => {
     );
 };
 
-export default MessageInputForm;
+export default React.memo(MessageInputForm);

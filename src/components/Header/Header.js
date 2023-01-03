@@ -19,6 +19,6 @@ export function Header() {
             <button onClick={handleLogout} className={styles.buttonOut}>Выйти</button>
         </header>
     );
-}
+};
 
-export default Header
+export default React.memo(Header);

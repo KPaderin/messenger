@@ -69,6 +69,6 @@ const CreateChat = ( {isActive, changeActive} ) => {
             </form>
         </ModalWindow>
     )
-}
+};
 
 export default React.memo(CreateChat);

@@ -25,4 +25,4 @@ const ChatMessages = ({selectedChat}) => {
     );
 };
 
-export default ChatMessages;
+export default React.memo(ChatMessages);

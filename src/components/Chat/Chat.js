@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import styles from './Chat.module.css';
 import ChatHeader from '../ChatHeader/ChatHeader';
 import ChatMessages from '../ChatMessages/ChatMessages';
@@ -24,11 +24,11 @@ const Chat = () => {
 
     const isOwner = compareWithSessionLogin(selectedChat.ownerLogin)
 
-    const settingsOption = [
+    const settingsOption = useMemo(() => [
         {text:"Участники", onClickFunction:() => membersListActive.changeActive(), id:1, publicOption:true},
         {text:"Редактировать", onClickFunction:() => editChatActive.changeActive(), id:2, publicOption:false},
         {text:"Удалить", onClickFunction:() => {dispatch(deleteChatById(selectedChat.chatId))}, id:3, publicOption:false}
-    ]
+    ], [selectedChat.chatId])
 
     return (
         <div className={styles.chat__wrap}>
@@ -63,4 +63,4 @@ const Chat = () => {
     );
 };
 
-export default Chat;
+export default React.memo(Chat);

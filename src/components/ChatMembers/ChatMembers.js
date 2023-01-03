@@ -9,7 +9,7 @@ import {kickUserAsync} from "../../store/asyncActions/kickUserAsync";
 import {addManyMemberAsync} from "../../store/asyncActions/addManyMembersAsync";
 import MembersList from "../MembersList/MembersList";
 
-const ChatMembers = ({isActive, changeActive, isOwner, chatId, members}) => {
+const ChatMembers = React.memo(({isActive, changeActive, isOwner, chatId, members}) => {
     const [selectedMembers, setSelectedMembers] = useState([])
     const dispatch = useDispatch();
 
@@ -55,6 +55,6 @@ const ChatMembers = ({isActive, changeActive, isOwner, chatId, members}) => {
                 </form>
             </ModalWindow>
     );
-};
+})
 
 export default ChatMembers;

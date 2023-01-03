@@ -41,4 +41,5 @@ const ChatHeader = ({items, changeMenuActive, chatSettingsActive, changeChatSett
     );
 };
 
-export default ChatHeader;
+
+export default React.memo(ChatHeader);

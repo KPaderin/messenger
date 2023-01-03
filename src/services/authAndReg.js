@@ -1,4 +1,3 @@
-import {initStoreFromApi} from "./initStoreFromApi";
 import {URL} from "../consts/url"
 export const authorization = function (userData) {
     return fetch(URL, {
@@ -23,7 +22,6 @@ export const authorization = function (userData) {
             if(json.hasOwnProperty("data")) {
                 status.auth = json.data.signIn;
                 status.login = userData.login;
-                initStoreFromApi();
             }
             return status
         })

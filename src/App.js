@@ -8,12 +8,11 @@ import {initStoreFromApi} from "./services/initStoreFromApi";
 import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 
 export function App() {
-    const [isAuth, setIsAuth] = useState(true);
+    const [isAuth, setIsAuth] = useState(false);
 
     useEffect(() => {
         if(localStorage.getItem('auth')){
             setIsAuth(true);
-            initStoreFromApi();
         }
         else{
             setIsAuth(false);
@@ -29,6 +28,7 @@ export function App() {
     const mainPage = () => {
         if(isAuth === false)
             return <Navigate replace to={"/login"} />;
+        initStoreFromApi();
         return <Main />
     }
 

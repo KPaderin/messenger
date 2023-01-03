@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useMemo} from 'react'
 import CreateChat from '../CreateChat/CreateChat'
 import {useDispatch} from "react-redux";
 import useActive from "../../hooks/useActive";
@@ -11,16 +11,16 @@ const ChatMenu = ({isActive, changeActive, chatsList}) => {
     const creatingChatActive = useActive()
     const dispatch = useDispatch();
 
-    const handleSetChat = function(e) {
+    const handleSetChat = useMemo(() => function(e) {
         let chatId = e.target.getAttribute('data-key')
         dispatch(selectChatByIdAsync(chatId))
-    }
+    }, [])
 
-    const handleNewChat = (e) => {
+    const handleNewChat = useMemo(() => function(e) {
         e.preventDefault();
         changeActive(false)
         creatingChatActive.changeActive(true)
-    }
+    }, [])
 
     return (
         <LeftMenu isActive={isActive} changeActive={changeActive}>

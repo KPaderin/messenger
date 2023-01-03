@@ -21,4 +21,4 @@ const LeftMenu = ({isActive, changeActive, children}) => {
     );
 };
 
-export default LeftMenu;
+export default React.memo(LeftMenu);

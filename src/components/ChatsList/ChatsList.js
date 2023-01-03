@@ -18,4 +18,4 @@ const ChatsList = ({chatsList, onClick}) => {
     );
 };
 
-export default ChatsList;
+export default React.memo(ChatsList);
