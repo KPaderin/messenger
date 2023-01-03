@@ -5,12 +5,15 @@ const initialState = {
         newChat: {
             ownerLogin: '',
             messages: [],
-            members: [],
+            chatMembers: [],
             chatId: '',
             chatType: '',
             chatName: '',
             chatImage: ''
         },
+    },
+    users: {
+        usersList: []
     }
 }
 

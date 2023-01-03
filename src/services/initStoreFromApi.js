@@ -1,7 +1,9 @@
 import {getChatsList} from "./getChatsList";
 import {addManyChats} from "../store/actionCreators/addManyChats";
-import {selectChatId} from '../store/actionCreators/selectChatId';
+import {selectChatById} from '../store/actionCreators/selectChatById';
 import store from "../store/store";
+import {getAllUsers} from "./users";
+import {addManyUsers} from "../store/actionCreators/addManyUsers";
 
 const Store = store;
 
@@ -20,7 +22,13 @@ export const initStoreFromApi = function() {
                 }
         })
         Store.dispatch(addManyChats(chatsList))
+        if(localStorage.getItem('chatId'))
+            Store.dispatch(selectChatById(localStorage.getItem('chatId')))
     });
-    if(localStorage.getItem('chatId'))
-        Store.dispatch(selectChatId(localStorage.getItem('chatId')))
+    getAllUsers().then((data) => {
+        let usersList = data.users.map((item) => {
+                return {name: item.login, login:item.login, id:item.login}
+        })
+        Store.dispatch(addManyUsers(usersList))
+    });
 }

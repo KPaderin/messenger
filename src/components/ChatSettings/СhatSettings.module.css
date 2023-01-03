@@ -13,25 +13,18 @@
     display: flex;
     min-width: 70px;
     width: calc((100% - 75%) / 2);
-    justify-content: flex-end;
-    align-items: flex-end;
-}
-
-.center__wrap {
-    flex: 1;
-    flex-basis: 1500px;
-    max-width: 100%;
-    justify-content: space-between;
-    align-items: flex-end;
 }
 
 .chat__settings {
+    flex: 1;
+    flex-basis: 1500px;
+    max-width: 100%;
+    text-align: center;
+    flex-direction: column;
     margin: 0;
     z-index: 0;
     display: flex;
     padding: 10px;
-    text-align: center;
-    flex-direction: column;
     background-color: #343A40;
 }
 

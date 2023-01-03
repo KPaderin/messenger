@@ -1,69 +1,56 @@
-import {initStoreFromApi} from "./initStoreFromApi";
-
-const URL = 'https://kilogram-api.yandex-urfu-2021.ru/query'
-export const authorization = function (login, password, isAuth, setIsAuth) {
-    if(isAuth)
-        return;
-    fetch(URL, {
+import {URL} from "../consts/url"
+export const authorization = function (userData) {
+    return fetch(URL, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-            query: `
-                    query{
-                      signIn(
-                        login: ` + login +
-                `password: ` + password + `
-                      )
-                    }`
+            query: `query SignIn($login: String!, $password: String!) {
+                        signIn(login: $login, password: $password)
+                }`,
+            variables: {login: userData.login, password: userData.password}
         })
     }).then(res => res.json())
         .then(json => {
-            if(json.hasOwnProperty("errors"))
-                alert("Произошла ошибка :(")
-            else {
-                setIsAuth(true);
-                localStorage.setItem('auth', json.data.signIn);
-                localStorage.setItem('login', login);
-                initStoreFromApi();
+            let status = {}
+            status.ok = true;
+            if(json.hasOwnProperty("errors")) {
+                status.errorsMessage = json.errors.map(error => error.message)
+                    .join("; ");
+                status.ok = false;
+                alert(status.errorsMessage);
             }
+            if(json.hasOwnProperty("data")) {
+                status.auth = json.data.signIn;
+                status.login = userData.login;
+            }
+            return status
         })
 }
 
-export const register = function(login, password, name, isAuth, setIsAuth) {
-    if(isAuth)
-        return;
-    fetch(URL, {
+export const register = function(userData, setIsAuth) {
+    return fetch(URL, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-            query: `
-                    mutation{
-                      register(
-                        login:` + login +
-                `password:` + password +
-                `name:` + name + `
-                      ) {
-                        image
-                      }
-                    }`
+            query: `mutation Register($login: String!, $password: String!, $name: String!) {
+                        register(login: $login, password: $password, name: $name) { image }
+                }`,
+            variables: {login: userData.login, password: userData.password, name:userData.name}
         })
     }).then(res => res.json())
         .then(json => {
-            if(json.hasOwnProperty("errors"))
-                alert("Произошла ошибка :(")
-            else {
-                setIsAuth(true);
-                authorization(login, password, setIsAuth);
+            let status = {}
+            status.ok = true;
+            if(json.hasOwnProperty("errors")) {
+                status.errorsMessage = json.errors.map(error => error.message)
+                    .join("; ")
+                status.ok = false;
+                alert(status.errorsMessage);
+            }
+            if(json.hasOwnProperty("data")) {
+                authorization(userData, setIsAuth);
                 alert("Добро пожаловать)")
             }
+            return status
         })
-}
-
-export const deauthorization = function(e, isAuth, setIsAuth)
-{
-    if(isAuth === true)
-        setIsAuth(false);
-    localStorage.removeItem('auth');
-    localStorage.removeItem('login');
-    localStorage.removeItem('chatId')
 }

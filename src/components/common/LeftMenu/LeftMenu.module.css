@@ -1,0 +1,32 @@
+.menuWrap {
+    position: fixed;
+    width: 100vw;
+    height: 97vh;
+    top: 80px;
+    transform: translateX(-200%);
+    transition: all .2s;
+}
+
+.menuWrap.active {
+    transform: translateX(0%);
+}
+
+.blur {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    left: 300px;
+    backdrop-filter: blur(2px);
+    background-color : rgba(160, 147, 147, 0);
+}
+
+.menu__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    max-width: 100%;
+    height: 100%;
+    padding-top: 10px;
+    background-color: #A09393;
+}

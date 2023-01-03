@@ -1,6 +1,6 @@
 const URL = 'https://kilogram-api.yandex-urfu-2021.ru/query'
 
-export const createChatAndGetStatus = (name, type, members) => {
+export const createChatAndGetStatusApi = (name, type, members) => {
     return fetch(URL, {
         method: 'POST',
         headers: {'Content-Type': 'application/json',
@@ -14,11 +14,11 @@ export const createChatAndGetStatus = (name, type, members) => {
     }).then(res => (res.json()))
         .then(json => {
             let status = {}
-            if(json.hasOwnProperty("errors"))
-            {
+            status.ok = true;
+            if(json.hasOwnProperty("errors")) {
                 status.errorsMessage = json.errors.map(error => error.message)
                     .join("; ")
-                return status
+                status.ok = false;
             }
             if(json.hasOwnProperty("data")) {
                 status.id = json.data.createChat.id

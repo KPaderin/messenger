@@ -1,0 +1,23 @@
+.wrap {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    overflow: hidden;
+}
+
+.btnCloseModal {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+
+.titleModal {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0 30px;
+    font-size: 30px;
+    color: #343A40;
+}

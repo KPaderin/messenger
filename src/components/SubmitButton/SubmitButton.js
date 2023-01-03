@@ -2,18 +2,16 @@ import React from 'react';
 import styles from './SubmitButton.module.css'
 import classNames from "classnames";
 
-const SubmitButton = ({
-    onClick,
-    children,
-    filledBackground
-    }) => {
+const SubmitButton = (props) => {
+
     const changeableClass = classNames({
         [styles.my__button]: true,
-        [styles.filledBackground]: (filledBackground === undefined) || filledBackground === true
+        [styles.filledBackground]: (props.filledBackground === undefined) || props.filledBackground === true
     });
+    
     return (
-        <button onClick={onClick} className={changeableClass}>
-            {children}
+        <button onClick={props.onClick} className={changeableClass} disabled={props.disabled}>
+            {props.children}
         </button>
     );
 };

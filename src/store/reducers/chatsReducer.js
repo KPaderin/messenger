@@ -1,7 +1,7 @@
 import initialState from "../initialState";
 import addChatAction from "../actions/addChatAction";
 import userLogoutAction from "../actions/userLogoutAction";
-import selectChatIdAction from "../actions/selectChatIdAction";
+import selectChatByIdAction from "../actions/selectChatByIdAction";
 import addManyChatsAction from "../actions/addManyChatsAction";
 import deleteChatAction from "../actions/deleteChatAction";
 import deleteMessageAction from "../actions/deleteMessageAction";
@@ -22,10 +22,10 @@ export default function chatsReducer(state = initialState.chats, action) {
         case userLogoutAction: {
             return {
                 ...state,
-                chats: initialState.chats
+                ...initialState.chats
             }
         }
-        case selectChatIdAction: {
+        case selectChatByIdAction: {
             return {
                 ...state,
                 selectedChatId: action.payload
