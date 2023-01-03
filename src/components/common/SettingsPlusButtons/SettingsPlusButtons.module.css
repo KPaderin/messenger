@@ -1,0 +1,25 @@
+.buttonsWrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 40px;
+    background-color: transparent;
+}
+
+.settingsIcon {
+    /* пока у этой кнопки нет никакого функционала */
+    opacity: 0;
+    padding-left: 40px;
+}
+
+.plusIcon {
+    padding-right: 40px;
+}
+.settingsIcon,
+.plusIcon {
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}

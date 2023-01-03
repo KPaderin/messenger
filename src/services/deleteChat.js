@@ -1,6 +1,6 @@
 import {URL} from '../consts/url'
 
-export const deleteChat = (id) => {
+export const deleteChatApi = (id) => {
     return fetch(URL, {
         method: 'POST',
         headers: {'Content-Type': 'application/json',

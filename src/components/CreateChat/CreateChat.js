@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from "react"
-import styles from './CreateChat.module.css'
-import plusIcon from '../ChatMenu/newChatIcon.svg'
-import { ModalWindow } from '../common/ModalWindow/ModalWindow'
-import DropdownList from '../DropdownList/DropdownList'
-import {createChatAndGetStatus} from '../../services/chats'
-import SelectableFilteredItemsList from '../SelectableFilteredItemsList/SelectableFilteredItemsList'
-import SubmitButton from "../SubmitButton/SubmitButton"
-import {addChat} from "../../store/actionCreators/addChat"
-import {useDispatch} from "react-redux"
-import {getAllUsers} from "../../services/users";
+import React, {useEffect, useState} from "react";
+import styles from "./CreateChat.module.css";
+import plusIcon from "../../images/plusIcon.svg";
+import {ModalWindow} from "../common/ModalWindow/ModalWindow";
+import DropdownList from "../DropdownList/DropdownList";
+import SelectableFilteredItemsList from "../SelectableFilteredItemsList/SelectableFilteredItemsList";
+import SubmitButton from "../SubmitButton/SubmitButton";
+import {useDispatch, useSelector} from "react-redux";
 import InputUnderlining from "../common/InputUnderlining/InputUnderlining";
+import useInput from "../../hooks/useInput";
+import {createChatAsync} from "../../store/asyncActions/createChatAsync";
+import {usersListSelector} from "../../store/selectors";
 
 const OPTIONS = {
     "CHANNEL": "Канал",
@@ -17,50 +17,40 @@ const OPTIONS = {
     "PRIVATE": "Приватный чат",
 }
 
-const CreateChat = ( {creatingChat, setCreatingChat} ) => {
-
+const CreateChat = ( {isActive, changeActive} ) => {
+    const chatName = useInput("")
     const [selectedMembers, setSelectedMembers] = useState([])
-    const [users, setUsers] = useState([])
-    const [chatName, setChatName] = useState("")
     const [chatType, setChatType] = useState("CHANNEL")
 
     const dispatch = useDispatch()
+    const users = useSelector(usersListSelector).map( item => {
+        return {...item, selected: false}
+    })
 
     useEffect(() => {
-        getAllUsers().then((data) => setUsers( data.users.map((item) => {
-            return {name: item.login, login:item.login, id:item.login, selected: false}
-        })))
-    }, [creatingChat])
+        chatName.reset()
+        setSelectedMembers([])
+        setChatType("CHANNEL")
+    }, [isActive])
 
     const createChatHandler = (e) => {
         e.preventDefault()
-        createChatAndGetStatus(chatName, chatType, selectedMembers.map(member => member.name)).then((res) => {
-            if(res.hasOwnProperty("errorsMessage")) {
-                alert(res.errorsMessage)
-                return
-            }
-            dispatch(
-                addChat(res.ownerLogin,[],selectedMembers,res.id,chatType,chatName, null)
-            )
-        })
-        setSelectedMembers([])
-        setChatName("")
-        setChatType("CHANNEL")
+        dispatch(createChatAsync(chatName.value, chatType, selectedMembers))
+        changeActive()
     }
 
     return (
-        <ModalWindow isOpen={creatingChat} onRequestClose={() => setCreatingChat(false)}>
+        <ModalWindow isOpen={isActive} onRequestClose={() => changeActive()}>
             <div
-                onClick={() => setCreatingChat(false)}
+                onClick={() => changeActive()}
                 className={styles.btnCloseModal}>
                 <img alt={"Close"} src={plusIcon} />
             </div>
             <b className={styles.titleModal}>Создание чата</b>
             <form className={styles.createChatForm}>
                 <InputUnderlining
-                    placeholderText={"Название"}
-                    textValue={chatName}
-                    setTextValue={setChatName}
+                    placeholder={"Название"}
+                    {...chatName}
                 />
                 <DropdownList
                     required={true}
@@ -74,12 +64,11 @@ const CreateChat = ( {creatingChat, setCreatingChat} ) => {
                     placeholder={"Поиск пользователя"}
                     title={"Участники:"}
                 />
-                <SubmitButton onClick={ e => {
-                    createChatHandler(e)
-                    setCreatingChat(false) }}>Создать</SubmitButton>
+                <SubmitButton
+                    onClick={createChatHandler}>Создать</SubmitButton>
             </form>
         </ModalWindow>
     )
-}
+};
 
-export default CreateChat;
+export default React.memo(CreateChat);

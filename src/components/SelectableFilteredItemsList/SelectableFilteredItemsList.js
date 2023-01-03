@@ -1,12 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styles from './SelectableFiltredItemsList.module.css'
+import InputUnderlining from "../common/InputUnderlining/InputUnderlining";
+import useLiveSearch from "../../hooks/useLiveSearch";
 
 const SelectableFilteredItemsList = ({ itemsList, selectedItems, setSelectedItems, placeholder, title }) => {
-    const [filteredItems, setFilteredItems] = useState([])
-
-    const liveSearch = (value) => {
-        setFilteredItems(itemsList.filter( item => item.name.indexOf(value) !== -1))
-    }
+    const filterItems = useLiveSearch(itemsList)
 
     const selectItem = function(e, item) {
         if(item.selected === true)
@@ -19,20 +17,15 @@ const SelectableFilteredItemsList = ({ itemsList, selectedItems, setSelectedItem
 
     return (
         <>
-            <div className={styles.input_wrapper}>
-                <input
-                    type={"text"}
-                    placeholder={placeholder}
-                    className={styles.input__my_input}
-                    onChange={e => {
-                        liveSearch(e.target.value)
-                    }}
-                />
-            </div>
+            <InputUnderlining
+                type={"text"}
+                placeholder={placeholder}
+                onChange={filterItems.onChange}
+            />
             <div className={styles.items_wrapper}>
                 <p className={styles.items_title}>{title}</p>
-                <ul className={styles.items_list}>
-                    {filteredItems.map( item => (
+                <ul>
+                    {filterItems.value.map( item => (
                         <li
                             className={!item.selected ? "" : styles.items_active_item}
                             onClick={(e) => selectItem(e, item)}

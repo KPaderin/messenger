@@ -1,46 +1,28 @@
 import React from 'react';
 import styles from './ChatMessages.module.css';
-import { useEffect, useRef, useState } from 'react';
-import Message from '../Message/Message'
 import {useDispatch} from "react-redux";
 import {sendMessageAsync} from "../../store/asyncActions/sendMessageAsync";
+import MessagesList from "../MessagesList/MessagesList";
+import MessageInputForm from "../MessageInputForm/MessageInputForm";
 
-const ChatMessages = ({selectedChat, SetSelectedChat, selectedChatId}) => {
-    const textareaRef = useRef(null);
-    const [currentValue, setCurrentValue ] = useState("");
+const ChatMessages = ({selectedChat}) => {
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        textareaRef.current.style.height = "0px";
-        const scrollHeight = textareaRef.current.scrollHeight;
-        textareaRef.current.style.height = Math.min(90, scrollHeight) + "px";
-    }, [currentValue]);
+    const handleSendMessage = (messageText) => {
+        dispatch(sendMessageAsync(selectedChat.chatId, messageText))
+    }
 
     return (
         <div className={styles.chat__messages__wrap}>
-            <div className={styles.messages__wrap}>
-                {selectedChat.messages.map(item =>
-                    <Message selectedChatId={selectedChatId}
-                             chatItem={item} key={item.id}/>
-                )}
-            </div>
-            <div className={styles.chat__input__area}>
-                <div className={styles.side__wrap} />
-                <div className={styles.center__wrap}>
-                    <textarea ref={textareaRef} value={currentValue}
-                              rows={1} placeholder={"Введите сообщение..."}
-                              onChange={e=>setCurrentValue(e.target.value)}
-                              spellCheck={'false'} className={styles.text__area} />
-                    <button onClick={(e) =>{
-                        dispatch(sendMessageAsync(selectedChatId, textareaRef.current.value))
-                        setCurrentValue("")
-                    }}
-                        className={styles.button__send}>Отправить</button>
-                </div>
-                <div className={styles.side__wrap} />
-            </div>
+            <MessagesList
+                messagesList={selectedChat.messages}
+                chatId={selectedChat.chatId}
+            />
+            <MessageInputForm
+                handleSendMessage={handleSendMessage}
+            />
         </div>
     );
 };
 
-export default ChatMessages;
+export default React.memo(ChatMessages);
