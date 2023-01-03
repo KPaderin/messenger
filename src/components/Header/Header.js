@@ -5,12 +5,12 @@ import {logout} from "../../services/logout";
 import {AuthContext} from "../../context";
 
 export function Header() {
+    const {setIsAuth} = useContext(AuthContext);
+
     const handleLogout = (e) => {
         e.stopPropagation();
         logout(setIsAuth);
     }
-
-    const {setIsAuth} = useContext(AuthContext);
 
     return (
         <header className={styles.header}>

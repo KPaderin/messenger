@@ -7,6 +7,7 @@ import {authorization, register} from '../../services/authAndReg';
 import SubmitButton from '../../components/SubmitButton/SubmitButton';
 import useInput from "../../hooks/useInput";
 import useToggle from "../../hooks/useToggle";
+import {updateUserData} from "../../services/updateUserData";
 
 const forms = [
     {
@@ -42,10 +43,7 @@ const Login = () => {
         e.target.disabled = true;
         waitingText.onClick(e);
         let userData = {login:login.value, password:password.value, name:name.value};
-        currentForm.value.funcOnSubmit(userData, setIsAuth).then(() => {
-            e.target.disabled = false;
-            waitingText.onClick(e);
-        })
+        updateUserData(currentForm.value.funcOnSubmit(userData), setIsAuth);
     };
 
     return (

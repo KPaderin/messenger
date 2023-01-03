@@ -1,6 +1,6 @@
 import {initStoreFromApi} from "./initStoreFromApi";
 import {URL} from "../consts/url"
-export const authorization = function (userData, setIsAuth) {
+export const authorization = function (userData) {
     return fetch(URL, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
@@ -21,11 +21,8 @@ export const authorization = function (userData, setIsAuth) {
                 alert(status.errorsMessage);
             }
             if(json.hasOwnProperty("data")) {
-                status.token = json.data.signIn;
+                status.auth = json.data.signIn;
                 status.login = userData.login;
-                setIsAuth(true);
-                localStorage.setItem('auth', json.data.signIn);
-                localStorage.setItem('login', userData.login);
                 initStoreFromApi();
             }
             return status
