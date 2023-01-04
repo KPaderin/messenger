@@ -14,13 +14,13 @@ const ChatMenu = ({isActive, changeActive, chatsList}) => {
     const handleSetChat = useMemo(() => function(e) {
         let chatId = e.target.getAttribute('data-key')
         dispatch(selectChatByIdAsync(chatId))
-    }, [])
+    }, [dispatch])
 
     const handleNewChat = useMemo(() => function(e) {
         e.preventDefault();
         changeActive(false)
         creatingChatActive.changeActive(true)
-    }, [])
+    }, [changeActive, creatingChatActive])
 
     return (
         <LeftMenu isActive={isActive} changeActive={changeActive}>

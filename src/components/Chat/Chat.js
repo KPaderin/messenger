@@ -28,7 +28,7 @@ const Chat = () => {
         {text:"Участники", onClickFunction:() => membersListActive.changeActive(), id:1, publicOption:true},
         {text:"Редактировать", onClickFunction:() => editChatActive.changeActive(), id:2, publicOption:false},
         {text:"Удалить", onClickFunction:() => {dispatch(deleteChatById(selectedChat.chatId))}, id:3, publicOption:false}
-    ], [selectedChat.chatId])
+    ], [dispatch, editChatActive, membersListActive, selectedChat.chatId])
 
     return (
         <div className={styles.chat__wrap}>
