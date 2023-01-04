@@ -31,7 +31,7 @@ const CreateChat = ( {isActive, changeActive} ) => {
         chatName.reset()
         setSelectedMembers([])
         setChatType("CHANNEL")
-    }, [isActive])
+    }, [chatName, isActive])
 
     const createChatHandler = (e) => {
         e.preventDefault()

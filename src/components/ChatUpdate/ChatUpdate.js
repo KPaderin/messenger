@@ -16,7 +16,7 @@ const ChatUpdate = ({chatName, isDefaultImage, chatId, isActive, changeActive}) 
     useEffect(() => {
         setCurrentValue(chatName);
         setUseDefaultImage(isDefaultImage);
-    }, [isActive])
+    }, [chatName, isActive, isDefaultImage])
 
     const handleUpdateChat = function(e) {
         e.preventDefault();
