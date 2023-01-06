@@ -21,7 +21,7 @@ const Message = ({selectedChatId, chatItem, isMutable}) => {
     }
 
     return (
-        <MessageWrap userImage={chatItem.createdBy.image}>
+        <MessageWrap userImage={chatItem.createdBy.image} >
             <article className={styles.message__area}>
                 <div className={styles.name}>{chatItem.createdBy.name}</div>
                 <div className={styles.message__text}>{chatItem.text}</div>
