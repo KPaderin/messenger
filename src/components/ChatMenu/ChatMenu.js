@@ -12,7 +12,8 @@ const ChatMenu = ({isActive, changeActive, chatsList}) => {
     const dispatch = useDispatch();
 
     const handleSetChat = useMemo(() => function(e) {
-        let chatId = e.target.getAttribute('data-key')
+        e.stopPropagation()
+        let chatId = e.currentTarget.getAttribute('data-key')
         dispatch(selectChatByIdAsync(chatId))
     }, [dispatch])
 
@@ -26,7 +27,7 @@ const ChatMenu = ({isActive, changeActive, chatsList}) => {
         <LeftMenu isActive={isActive} changeActive={changeActive}>
             <ChatsList
                 chatsList={chatsList}
-                onClick={handleSetChat}
+                onClickHandler={handleSetChat}
             />
             <SettingsPlusButtons plusOnClick={handleNewChat}/>
             <CreateChat {...creatingChatActive}/>
