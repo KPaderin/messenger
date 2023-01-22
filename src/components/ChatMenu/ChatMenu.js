@@ -8,7 +8,7 @@ import LeftMenu from "../common/LeftMenu/LeftMenu";
 import {selectChatByIdAsync} from "../../store/asyncActions/selectChatByIdAsync";
 
 const ChatMenu = ({isActive, changeActive, chatsList}) => {
-    const creatingChatActive = useActive()
+    const [creatingChatActive, setCreatingChatActive] = useActive()
     const dispatch = useDispatch();
 
     const handleSetChat = useMemo(() => function(e) {
@@ -20,7 +20,7 @@ const ChatMenu = ({isActive, changeActive, chatsList}) => {
     const handleNewChat = useMemo(() => function(e) {
         e.preventDefault();
         changeActive(false)
-        creatingChatActive.changeActive(true)
+        setCreatingChatActive(true)
     }, [changeActive, creatingChatActive])
 
     return (
@@ -30,7 +30,7 @@ const ChatMenu = ({isActive, changeActive, chatsList}) => {
                 onClickHandler={handleSetChat}
             />
             <SettingsPlusButtons plusOnClick={handleNewChat}/>
-            <CreateChat {...creatingChatActive}/>
+            <CreateChat isActive={creatingChatActive} changeActive={setCreatingChatActive}/>
         </LeftMenu>
     );
 };

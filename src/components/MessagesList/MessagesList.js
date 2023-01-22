@@ -3,12 +3,13 @@ import styles from "./MessagesList.module.css";
 import Message from "../Message/Message";
 import {compareWithSessionLogin} from "../../helpers/compareWithSessionLogin";
 
-const MessagesList = ({messagesList, chatId}) => {
+const MessagesList = ({messagesList, chatId, clickUserImage}) => {
 
     return (
         <div className={styles.messages__wrap}>
             {messagesList.map(message =>
                 <Message
+                    clickUserImage={clickUserImage}
                     selectedChatId={chatId}
                     chatItem={message}
                     isMutable={compareWithSessionLogin(message.createdBy.login)}
@@ -19,4 +20,4 @@ const MessagesList = ({messagesList, chatId}) => {
     );
 };
 
-export default MessagesList;
+export default React.memo(MessagesList);

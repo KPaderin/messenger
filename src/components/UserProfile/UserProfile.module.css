@@ -1,0 +1,39 @@
+.createChatForm {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    overflow: hidden;
+}
+
+.btnCloseModal {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+
+.titleModal {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0 30px;
+    font-size: 30px;
+    color: #343A40;
+}
+
+.input_myInput {
+    height: 30px;
+    display: flex;
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding: 0 4px;
+    background: #FFFFFF;
+    border-bottom: solid 1px #343A40;
+}
+
+.input_myInput::placeholder {
+    color: rgba(186, 186, 186, 1);
+}

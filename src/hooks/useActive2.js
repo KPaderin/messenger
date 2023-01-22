@@ -11,8 +11,8 @@ const reducer = function(state, action) {
     }
 }
 
-const useActive = (initial) => {
-    const [isActive, dispatch] = useReducer(reducer, {isActive: initial});
+const useActive2 = (initial) => {
+    const [isActive, dispatch] = useReducer(reducer, {isActive: false});
 
     return [
         isActive.isActive,
@@ -26,4 +26,4 @@ const useActive = (initial) => {
 };
 
 
-export default useActive
+export default useActive2

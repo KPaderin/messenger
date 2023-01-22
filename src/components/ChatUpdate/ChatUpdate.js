@@ -55,4 +55,4 @@ const ChatUpdate = ({chatName, isDefaultImage, chatId, isActive, changeActive}) 
     );
 };
 
-export default ChatUpdate;
+export default React.memo(ChatUpdate);

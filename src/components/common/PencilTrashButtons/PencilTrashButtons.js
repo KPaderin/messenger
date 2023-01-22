@@ -12,4 +12,4 @@ const PencilTrashButtons = ({pencilOnClick, trashOnClick}) => {
     );
 };
 
-export default PencilTrashButtons;
+export default React.memo(PencilTrashButtons);
