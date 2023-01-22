@@ -4,12 +4,12 @@ import {useDispatch} from "react-redux";
 import {sendMessageAsync} from "../../store/asyncActions/sendMessageAsync";
 import MessagesList from "../MessagesList/MessagesList";
 import MessageInputForm from "../MessageInputForm/MessageInputForm";
-import UserProfile from "../UserProfile/UserProfile";   
-import useActive2 from "../../hooks/useActive2";
+import UserProfile from "../UserProfile/UserProfile";
+import useActive from "../../hooks/useActive";
 
 const ChatMessages = ({selectedChat}) => {
     const dispatch = useDispatch();
-    const [userProfileActive, changeUserProfileActive] = useActive2();
+    const [userProfileActive, changeUserProfileActive] = useActive();
 
     const handleSendMessage = useCallback((messageText) => {
         dispatch(sendMessageAsync(selectedChat.chatId, messageText))
