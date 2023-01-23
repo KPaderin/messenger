@@ -22,4 +22,4 @@ const SettingsPlusButtons = ({settingsOnClick, plusOnClick}) => {
     );
 };
 
-export default SettingsPlusButtons;
+export default React.memo(SettingsPlusButtons);

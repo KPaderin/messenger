@@ -21,7 +21,7 @@ const ChatMenu = ({isActive, changeActive, chatsList}) => {
         e.preventDefault();
         changeActive(false)
         setCreatingChatActive(true)
-    }, [changeActive, creatingChatActive])
+    }, [changeActive, setCreatingChatActive])
 
     return (
         <LeftMenu isActive={isActive} changeActive={changeActive}>
@@ -35,4 +35,4 @@ const ChatMenu = ({isActive, changeActive, chatsList}) => {
     );
 };
 
-export default ChatMenu;
+export default React.memo(ChatMenu);
