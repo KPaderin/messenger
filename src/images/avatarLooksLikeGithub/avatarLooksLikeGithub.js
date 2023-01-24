@@ -1,11 +1,11 @@
 const md5 = require("md5");
 
 class pixel {
-    constructor(x, y, color) {
+    constructor(x, y, color, pixelSize = 32) {
         this.x = x;
         this.y = y;
         this.color = color;
-        this.size = 32;
+        this.size = pixelSize;
     }
 
     fill(color) {
@@ -14,15 +14,18 @@ class pixel {
 }
 
 class binaryColorPixelMatrix {
+    pixelSize = 32;
+    defaultBackgroundColor = "#f2f1f2";
+
     constructor(width, height, backgroundColor) {
-        this.width = width*32;
-        this.height = height*32;
-        this.backgroundColor = backgroundColor || "#f2f1f2"
+        this.width = width*this.pixelSize;
+        this.height = height*this.pixelSize;
+        this.backgroundColor = backgroundColor || this.defaultBackgroundColor
         this.matrix = new Array(height);
         for(let i = 0; i < height; i++) {
             let arr = new Array(width);
             for(let j = 0; j < width; j++)
-                arr[j] = new pixel(i*32, j*32, backgroundColor);
+                arr[j] = new pixel(i*this.pixelSize, j*this.pixelSize, backgroundColor);
             this.matrix[i] = arr;
         }
     }
@@ -55,6 +58,7 @@ class binaryColorPixelMatrix {
 
     getShapesArray() {
         let shapesArray = [];
+        //draw background
         shapesArray.push(
             this.getRect(0, 0, this.width, this.height, this.backgroundColor));
         let firstPixel = true;
@@ -100,6 +104,7 @@ export class avatarLooksLikeGithub {
         this.backgroundColor = backgroundColor || "#f2f1f2";
         this.newMatrix = new binaryColorPixelMatrix(12, 12, this.backgroundColor);
         let loginMD5 = md5(login);
+
         let binBytesArray = [];
         for(let i = 0; i < loginMD5.length; i+=2)
             binBytesArray.push(parseInt(loginMD5.slice(i, i+2), 16))
