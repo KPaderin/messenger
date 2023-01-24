@@ -15,8 +15,9 @@ const useScroll = (parentRef, childRef, callback) => {
         }, options)
         childRef.current && observer.current.observe(childRef.current)
 
+        let childRefCur = childRef.current
         return function () {
-            observer.current.unobserve(childRef.current)
+            childRefCur && observer.current.unobserve(childRefCur)
         };
     }, [callback, childRef, parentRef])
 };
