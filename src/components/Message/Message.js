@@ -23,7 +23,7 @@ const Message = ({selectedChatId, chatItem, isMutable, clickUserImage}) => {
     const clickImageHandler = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        clickUserImage(e);
+        clickUserImage(e, chatItem.createdBy);
     }
 
     return (

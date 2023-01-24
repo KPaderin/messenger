@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback} from 'react';
 import styles from './ChatHeader.module.css';
 import menuButtonImg from '../../images/menu-burger.svg';
 import optionsButtonImage from '../../images/options.svg';

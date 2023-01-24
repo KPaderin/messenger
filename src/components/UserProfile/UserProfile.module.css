@@ -1,6 +1,6 @@
-.createChatForm {
-    width: 350px;
+.editProfileForm {
     display: flex;
+    width: 350px;
     flex-direction: column;
     gap: 25px;
     overflow: hidden;
@@ -22,18 +22,28 @@
     color: #343A40;
 }
 
-.input_myInput {
-    height: 30px;
+.userInfo {
     display: flex;
-    width: 100%;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    padding: 0 4px;
-    background: #FFFFFF;
-    border-bottom: solid 1px #343A40;
+    flex-direction: column;
+    margin: 0;
+    padding: 0 0;
+    max-height: 200px;
+    overflow: auto;
 }
 
-.input_myInput::placeholder {
-    color: rgba(186, 186, 186, 1);
+.userInfo li {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 4px;
+
+}
+.userInfo li div {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    border-bottom: solid 1px #343A40;
 }

@@ -10,7 +10,7 @@ const MessageWrap = ({children, userImage, imageOnClick}) => {
             <SideWrap className={styles.iconWrap_right}>
                 <div className={styles.userIconWrap} onClick={imageOnClick}>
                     <img className={styles.userIcon} alt={"userIcon"}
-                         src={userImage === null ? logo
+                         src={(userImage === null || userImage === 'null') ? logo
                              : `data:image/svg+xml;base64,${userImage}`}
                     />
                 </div>
