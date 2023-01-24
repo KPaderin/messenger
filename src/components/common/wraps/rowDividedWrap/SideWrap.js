@@ -9,4 +9,4 @@ const SideWrap = ({children, className}) => {
     );
 };
 
-export default SideWrap;
+export default React.memo(SideWrap);

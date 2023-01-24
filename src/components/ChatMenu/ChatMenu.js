@@ -8,30 +8,31 @@ import LeftMenu from "../common/LeftMenu/LeftMenu";
 import {selectChatByIdAsync} from "../../store/asyncActions/selectChatByIdAsync";
 
 const ChatMenu = ({isActive, changeActive, chatsList}) => {
-    const creatingChatActive = useActive()
+    const [creatingChatActive, setCreatingChatActive] = useActive()
     const dispatch = useDispatch();
 
     const handleSetChat = useMemo(() => function(e) {
-        let chatId = e.target.getAttribute('data-key')
+        e.stopPropagation()
+        let chatId = e.currentTarget.getAttribute('data-key')
         dispatch(selectChatByIdAsync(chatId))
     }, [dispatch])
 
     const handleNewChat = useMemo(() => function(e) {
         e.preventDefault();
         changeActive(false)
-        creatingChatActive.changeActive(true)
-    }, [changeActive, creatingChatActive])
+        setCreatingChatActive(true)
+    }, [changeActive, setCreatingChatActive])
 
     return (
         <LeftMenu isActive={isActive} changeActive={changeActive}>
             <ChatsList
                 chatsList={chatsList}
-                onClick={handleSetChat}
+                onClickHandler={handleSetChat}
             />
             <SettingsPlusButtons plusOnClick={handleNewChat}/>
-            <CreateChat {...creatingChatActive}/>
+            <CreateChat isActive={creatingChatActive} changeActive={setCreatingChatActive}/>
         </LeftMenu>
     );
 };
 
-export default ChatMenu;
+export default React.memo(ChatMenu);

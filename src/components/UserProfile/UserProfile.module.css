@@ -1,0 +1,49 @@
+.editProfileForm {
+    display: flex;
+    width: 350px;
+    flex-direction: column;
+    gap: 25px;
+    overflow: hidden;
+}
+
+.btnCloseModal {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+
+.titleModal {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0 30px;
+    font-size: 30px;
+    color: #343A40;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0 0;
+    max-height: 200px;
+    overflow: auto;
+}
+
+.userInfo li {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 4px;
+
+}
+.userInfo li div {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    border-bottom: solid 1px #343A40;
+}

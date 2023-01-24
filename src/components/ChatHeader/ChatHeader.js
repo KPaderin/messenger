@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import styles from './ChatHeader.module.css';
 import menuButtonImg from '../../images/menu-burger.svg';
 import optionsButtonImage from '../../images/options.svg';
@@ -15,10 +15,16 @@ const ChatHeader = ({items, changeMenuActive, chatSettingsActive, changeChatSett
         [styles.button__options]:true,
         [styles.rotate__button]:chatSettingsActive
     })
+
+    const handleMenuOpen = useCallback(() => function(e) {
+        e.preventDefault();
+        changeMenuActive();
+    }, [changeMenuActive])
+
     return (
         <div className={styles.chat__wrap__header}>
             <SideWrap>
-                <button onClick={() => {changeMenuActive()}}
+                <button onClick={handleMenuOpen()}
                         className={styles.button__menu}>
                     <img alt="menuButton" src={menuButtonImg}/>
                 </button>

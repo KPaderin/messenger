@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import styles from "./CreateChat.module.css";
 import plusIcon from "../../images/plusIcon.svg";
 import {ModalWindow} from "../common/ModalWindow/ModalWindow";
@@ -27,22 +27,23 @@ const CreateChat = ( {isActive, changeActive} ) => {
         return {...item, selected: false}
     })
 
-    useEffect(() => {
+    const closeModalHandler = () => {
         chatName.reset()
         setSelectedMembers([])
         setChatType("CHANNEL")
-    }, [chatName, isActive])
+        changeActive();
+    }
 
     const createChatHandler = (e) => {
         e.preventDefault()
         dispatch(createChatAsync(chatName.value, chatType, selectedMembers))
-        changeActive()
+        closeModalHandler();
     }
 
     return (
-        <ModalWindow isOpen={isActive} onRequestClose={() => changeActive()}>
+        <ModalWindow isOpen={isActive} onRequestClose={closeModalHandler}>
             <div
-                onClick={() => changeActive()}
+                onClick={closeModalHandler}
                 className={styles.btnCloseModal}>
                 <img alt={"Close"} src={plusIcon} />
             </div>

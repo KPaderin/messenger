@@ -1,17 +1,29 @@
-import { useState } from "react";
+import {useCallback, useReducer} from "react";
+
+const reducer = function(state, action) {
+    switch(action.type) {
+        case 'setActive':
+            return { isActive: action.value }
+        case 'changeActive':
+            return { isActive: !state.isActive}
+        default:
+            return { isActive: false}
+    }
+}
 
 const useActive = (initial) => {
-    const [isActive, setIsActive] = useState(initial);
+    const [isActive, dispatch] = useReducer(reducer, {isActive: initial});
 
-    return {
-        isActive,
-        changeActive: (changed) => {
+    return [
+        isActive.isActive,
+        useCallback((changed) => {
             if(changed === undefined)
-                setIsActive(!isActive)
+                dispatch({type: 'changeActive'})
             else
-                setIsActive(changed)
-        }
-    };
+                dispatch({type: 'setActive', value: changed})
+        }, [])
+    ];
 };
+
 
 export default useActive

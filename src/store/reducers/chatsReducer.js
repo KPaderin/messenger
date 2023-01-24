@@ -10,6 +10,7 @@ import editMessageAction from "../actions/editMessageAction";
 import updateChatAction from "../actions/updateChatAction";
 import kickUserAction from "../actions/kickUserAction";
 import addManyMembersAction from "../actions/addManyMembersAction";
+import addMessagesBeforeOldAction from "../actions/addMessagesBeforeOld";
 
 export default function chatsReducer(state = initialState.chats, action) {
     switch(action.type) {
@@ -104,6 +105,16 @@ export default function chatsReducer(state = initialState.chats, action) {
                 chatsList: state.chatsList.map(chat => {
                     if(chat.chatId === action.payload.chatId)
                         return {...chat, chatMembers: chat.chatMembers.concat(action.payload.users)}
+                    return chat
+                })
+            }
+        }
+        case addMessagesBeforeOldAction: {
+            return {
+                ...state,
+                chatsList: state.chatsList.map(chat => {
+                    if(chat.chatId === action.payload.chatId)
+                        return {...chat, messages: chat.messages.concat(action.payload.messages)}
                     return chat
                 })
             }

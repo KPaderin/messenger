@@ -9,4 +9,4 @@ const CenterWrap = ({children, className}) => {
     );
 };
 
-export default CenterWrap;
+export default React.memo(CenterWrap);
