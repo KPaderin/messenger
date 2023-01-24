@@ -14,20 +14,20 @@ You can see it on [site](https://chimerical-squirrel-b3224d.netlify.app/chat).
 
 ## Learn More
 
-###Routing
+### Routing
 
 React Router
 
-###State Management
+### State Management
 Redux
 
 Redux DevTools
 
-###Middleware
+### Middleware
 
 Redux Thunk
 
-##P.S
+## P.S
 
 You can leave feedback for me, it will help me write code better. 
 
