@@ -2,6 +2,8 @@
 
 This is my pet-project.
 
+You can see it on [site](https://chimerical-squirrel-b3224d.netlify.app/chat).
+
 ## Available Scripts
 
 ### `npm start`

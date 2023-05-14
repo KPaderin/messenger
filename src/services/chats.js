@@ -1,4 +1,4 @@
-const URL = 'https://kilogram-api.yandex-urfu-2021.ru/query'
+import {URL} from "../consts/url"
 
 export const createChatAndGetStatusApi = (name, type, members) => {
     return fetch(URL, {

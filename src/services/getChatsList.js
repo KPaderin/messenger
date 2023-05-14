@@ -1,4 +1,4 @@
-import { URL } from './/url';
+import { URL } from '../consts/url';
 
 export const getChatsList = function()
 {

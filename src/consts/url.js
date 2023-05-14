@@ -1,1 +1,1 @@
-export const URL = 'https://kilogram-api.yandex-urfu-2021.ru/query'
+export const URL = 'https://kilogram-api--privetprivetov.repl.co/query'
